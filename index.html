@@ -543,6 +543,23 @@
             color: #ddd;
         }
         
+        /* Page-specific styles */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .admin-page {
+            display: none;
+        }
+        
+        .admin-page.active {
+            display: block;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-container {
@@ -586,6 +603,7 @@
                     <li><a href="#" class="nav-link" data-page="clubs"><i class="material-icons">groups</i> Clubs</a></li>
                     <li><a href="#" class="nav-link" data-page="account"><i class="material-icons">person</i> Account info</a></li>
                     <li><a href="#" class="nav-link" data-page="settings"><i class="material-icons">settings</i> Settings</a></li>
+                    <li id="admin-nav-item" style="display: none;"><a href="#" class="nav-link" data-page="admin"><i class="material-icons">admin_panel_settings</i> Admin Panel</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons" id="auth-buttons">
@@ -606,11 +624,11 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <!-- Homepage -->
-            <section id="homepage" class="page-content active">
+    <!-- Main Content - Regular Pages -->
+    <main id="main-content">
+        <!-- Homepage -->
+        <section id="homepage" class="page active">
+            <div class="container">
                 <h2 class="page-title">Welcome to BNIYEKHLEF High School</h2>
                 <div class="card">
                     <h3><i class="material-icons">info</i> About Our School</h3>
@@ -636,10 +654,12 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Announcements Page -->
-            <section id="announcements" class="page-content">
+        <!-- Announcements Page -->
+        <section id="announcements" class="page">
+            <div class="container">
                 <h2 class="page-title">Announcements</h2>
                 <div class="card">
                     <div id="all-announcements">
@@ -650,10 +670,12 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Events Page -->
-            <section id="events" class="page-content">
+        <!-- Events Page -->
+        <section id="events" class="page">
+            <div class="container">
                 <h2 class="page-title">Events</h2>
                 <div class="card">
                     <div id="all-events">
@@ -664,10 +686,12 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Clubs Page -->
-            <section id="clubs" class="page-content">
+        <!-- Clubs Page -->
+        <section id="clubs" class="page">
+            <div class="container">
                 <h2 class="page-title">Clubs</h2>
                 <div class="card">
                     <div id="all-clubs">
@@ -678,10 +702,12 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Account Info Page -->
-            <section id="account" class="page-content">
+        <!-- Account Info Page -->
+        <section id="account" class="page">
+            <div class="container">
                 <h2 class="page-title">Account Information</h2>
                 <div class="card">
                     <h3><i class="material-icons">person</i> Personal Information</h3>
@@ -717,10 +743,12 @@
                         <input type="text" id="advisor" class="form-control" value="Not available" readonly>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Settings Page -->
-            <section id="settings" class="page-content">
+        <!-- Settings Page -->
+        <section id="settings" class="page">
+            <div class="container">
                 <h2 class="page-title">Settings</h2>
                 <div class="card">
                     <h3><i class="material-icons">notifications</i> Notification Preferences</h3>
@@ -756,8 +784,78 @@
                     </div>
                     <button class="btn btn-primary">Update Password</button>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
+        <!-- Admin Panel Page -->
+        <section id="admin" class="page">
+            <div class="container">
+                <h2 class="page-title">Admin Panel</h2>
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-announcements">0</div>
+                        <div class="stat-label">Total Announcements</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-events">0</div>
+                        <div class="stat-label">Total Events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-clubs">0</div>
+                        <div class="stat-label">Active Clubs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-users">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="material-icons">campaign</i> Announcements Management</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p>Create and manage school announcements</p>
+                        <button class="btn btn-register" id="add-announcement-btn">Add Announcement</button>
+                    </div>
+                    <div id="admin-announcements-list">
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Add your first announcement to get started.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="material-icons">event</i> Events Management</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p>Create and manage school events</p>
+                        <button class="btn btn-register" id="add-event-btn">Add Event</button>
+                    </div>
+                    <div id="admin-events-list">
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Yet</h3>
+                            <p>Add your first event to get started.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="material-icons">groups</i> Clubs Management</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p>Create and manage school clubs</p>
+                        <button class="btn btn-register" id="add-club-btn">Add Club</button>
+                    </div>
+                    <div id="admin-clubs-list">
+                        <div class="empty-state">
+                            <i class="material-icons">groups</i>
+                            <h3>No Clubs Yet</h3>
+                            <p>Add your first club to get started.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Login Modal -->
@@ -819,135 +917,6 @@
             <div class="form-footer">
                 <p>Already have an account? <a href="#" id="switch-to-login">Login here</a></p>
             </div>
-        </div>
-    </div>
-
-    <!-- Admin Panel (Hidden by default) -->
-    <div class="admin-panel" id="admin-panel">
-        <div class="admin-header">
-            <div class="container admin-nav">
-                <div class="logo">
-                    <i class="material-icons logo-icon">admin_panel_settings</i>
-                    <h1>Admin Panel - BNIYEKHLEF High School</h1>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#" class="admin-nav-link active" data-admin-page="dashboard"><i class="material-icons">dashboard</i> Dashboard</a></li>
-                        <li><a href="#" class="admin-nav-link" data-admin-page="announcements-admin"><i class="material-icons">campaign</i> Announcements</a></li>
-                        <li><a href="#" class="admin-nav-link" data-admin-page="events-admin"><i class="material-icons">event</i> Events</a></li>
-                        <li><a href="#" class="admin-nav-link" data-admin-page="clubs-admin"><i class="material-icons">groups</i> Clubs</a></li>
-                        <li><a href="#" class="admin-nav-link" data-admin-page="users-admin"><i class="material-icons">people</i> Users</a></li>
-                    </ul>
-                </nav>
-                <div>
-                    <button class="btn btn-logout" id="logout-admin">Logout</button>
-                </div>
-            </div>
-        </div>
-        <div class="container admin-content">
-            <!-- Admin Dashboard -->
-            <section id="dashboard" class="admin-page-content active">
-                <h2 class="page-title">Admin Dashboard</h2>
-                <div class="admin-stats">
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-announcements">0</div>
-                        <div class="stat-label">Total Announcements</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-events">0</div>
-                        <div class="stat-label">Total Events</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-clubs">0</div>
-                        <div class="stat-label">Active Clubs</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-users">0</div>
-                        <div class="stat-label">Total Users</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3><i class="material-icons">trending_up</i> Recent Activity</h3>
-                    <div id="recent-activity">
-                        <div class="empty-state">
-                            <i class="material-icons">history</i>
-                            <h3>No Recent Activity</h3>
-                            <p>Activity will appear here as you manage the website.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Admin Announcements -->
-            <section id="announcements-admin" class="admin-page-content">
-                <h2 class="page-title">Manage Announcements</h2>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3><i class="material-icons">campaign</i> All Announcements</h3>
-                        <button class="btn btn-register" id="add-announcement-btn">Add Announcement</button>
-                    </div>
-                    <div id="admin-announcements-list">
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Add your first announcement to get started.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Admin Events -->
-            <section id="events-admin" class="admin-page-content">
-                <h2 class="page-title">Manage Events</h2>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3><i class="material-icons">event</i> All Events</h3>
-                        <button class="btn btn-register" id="add-event-btn">Add Event</button>
-                    </div>
-                    <div id="admin-events-list">
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Yet</h3>
-                            <p>Add your first event to get started.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Admin Clubs -->
-            <section id="clubs-admin" class="admin-page-content">
-                <h2 class="page-title">Manage Clubs</h2>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3><i class="material-icons">groups</i> All Clubs</h3>
-                        <button class="btn btn-register" id="add-club-btn">Add Club</button>
-                    </div>
-                    <div id="admin-clubs-list">
-                        <div class="empty-state">
-                            <i class="material-icons">groups</i>
-                            <h3>No Clubs Yet</h3>
-                            <p>Add your first club to get started.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Admin Users -->
-            <section id="users-admin" class="admin-page-content">
-                <h2 class="page-title">User Management</h2>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3><i class="material-icons">people</i> All Users</h3>
-                    </div>
-                    <div id="admin-users-list">
-                        <div class="empty-state">
-                            <i class="material-icons">people</i>
-                            <h3>No Users Yet</h3>
-                            <p>User accounts will appear here once registered.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
 
@@ -1053,12 +1022,12 @@
                 <h1>BNIYEKHLEF High School</h1>
             </div>
             <div class="footer-links">
-                <a href="#">Homepage</a>
-                <a href="#">Announcements</a>
-                <a href="#">Events</a>
-                <a href="#">Clubs</a>
-                <a href="#">Account info</a>
-                <a href="#">Settings</a>
+                <a href="#" data-page="homepage">Homepage</a>
+                <a href="#" data-page="announcements">Announcements</a>
+                <a href="#" data-page="events">Events</a>
+                <a href="#" data-page="clubs">Clubs</a>
+                <a href="#" data-page="account">Account info</a>
+                <a href="#" data-page="settings">Settings</a>
             </div>
             <div class="copyright">
                 &copy; 2023 BNIYEKHLEF High School. All rights reserved.
@@ -1084,57 +1053,18 @@
         const db = firebase.firestore();
 
         // Global variables
-        let currentUser = null;
-        let userRole = null;
-
+        let currentUser = null
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
 
         async function initializeApp() {
-            // Check if admin user exists, if not create it
-            await checkAndCreateAdminUser();
-            
             // Load content for all users
             loadPublicContent();
             
             // Set up event listeners
             setupEventListeners();
-        }
-
-        // Check if admin user exists, create if not
-        async function checkAndCreateAdminUser() {
-            try {
-                const adminEmail = 'admin@school.com';
-                
-                // Try to sign in with admin credentials
-                try {
-                    await auth.signInWithEmailAndPassword(adminEmail, 'admin123');
-                    // If successful, admin already exists
-                    await auth.signOut();
-                    return;
-                } catch (error) {
-                    // Admin doesn't exist or credentials are wrong, create admin
-                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-                        const userCredential = await auth.createUserWithEmailAndPassword(adminEmail, 'admin123');
-                        const adminUser = userCredential.user;
-                        
-                        // Create admin user document in Firestore
-                        await db.collection('users').doc(adminUser.uid).set({
-                            name: 'School Administrator',
-                            email: adminEmail,
-                            role: 'admin',
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        
-                        console.log('Admin user created successfully');
-                        await auth.signOut();
-                    }
-                }
-            } catch (error) {
-                console.error('Error checking/creating admin user:', error);
-            }
         }
 
         // Load public content (announcements, events, clubs)
@@ -1354,48 +1284,36 @@
                     this.classList.add('active');
                     
                     // Hide all page content
-                    document.querySelectorAll('.page-content').forEach(page => {
+                    document.querySelectorAll('.page').forEach(page => {
                         page.classList.remove('active');
                     });
                     
                     // Show selected page content
                     const pageId = this.getAttribute('data-page');
                     document.getElementById(pageId).classList.add('active');
+                    
+                    // Load admin content if needed
+                    if (pageId === 'admin') {
+                        loadAdminContent();
+                    }
                 });
             });
 
-            // Admin page navigation
-            document.querySelectorAll('.admin-nav-link').forEach(link => {
+            // Footer navigation
+            document.querySelectorAll('.footer-links a').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
                     
-                    // Remove active class from all admin links
-                    document.querySelectorAll('.admin-nav-link').forEach(l => l.classList.remove('active'));
+                    // Update nav links
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
                     
-                    // Add active class to clicked admin link
-                    this.classList.add('active');
-                    
-                    // Hide all admin page content
-                    document.querySelectorAll('.admin-page-content').forEach(page => {
+                    // Show page
+                    document.querySelectorAll('.page').forEach(page => {
                         page.classList.remove('active');
                     });
-                    
-                    // Show selected admin page content
-                    const adminPageId = this.getAttribute('data-admin-page');
-                    document.getElementById(adminPageId).classList.add('active');
-                    
-                    // Load admin content if needed
-                    if (adminPageId === 'announcements-admin') {
-                        loadAdminAnnouncements();
-                    } else if (adminPageId === 'events-admin') {
-                        loadAdminEvents();
-                    } else if (adminPageId === 'clubs-admin') {
-                        loadAdminClubs();
-                    } else if (adminPageId === 'users-admin') {
-                        loadAdminUsers();
-                    } else if (adminPageId === 'dashboard') {
-                        loadAdminDashboard();
-                    }
+                    document.getElementById(pageId).classList.add('active');
                 });
             });
         }
@@ -1410,7 +1328,6 @@
             const switchToRegister = document.getElementById('switch-to-register');
             const switchToLogin = document.getElementById('switch-to-login');
             const logoutBtn = document.getElementById('logout-btn');
-            const logoutAdminBtn = document.getElementById('logout-admin');
 
             // Show login modal
             loginBtn.addEventListener('click', () => {
@@ -1551,15 +1468,20 @@
                     // Reset UI
                     document.getElementById('auth-buttons').style.display = 'flex';
                     document.getElementById('user-info').style.display = 'none';
-                    document.getElementById('admin-panel').style.display = 'none';
-                    document.querySelector('header').style.display = 'block';
-                    document.querySelector('main').style.display = 'block';
-                    document.querySelector('footer').style.display = 'block';
+                    document.getElementById('admin-nav-item').style.display = 'none';
                     
                     // Show login modal
                     document.querySelectorAll('.modal').forEach(modal => {
                         modal.style.display = 'none';
                     });
+                    
+                    // Go to homepage
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    document.querySelector('.nav-link[data-page="homepage"]').classList.add('active');
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById('homepage').classList.add('active');
                     
                     alert('You have been logged out.');
                 }).catch((error) => {
@@ -1567,9 +1489,8 @@
                 });
             }
 
-            // Attach logout handlers
+            // Attach logout handler
             logoutBtn.addEventListener('click', logout);
-            logoutAdminBtn.addEventListener('click', logout);
         }
 
         // Set up admin event listeners
@@ -1609,8 +1530,7 @@
                     
                     // Reload announcements
                     loadAnnouncements();
-                    loadAdminAnnouncements();
-                    loadAdminDashboard();
+                    loadAdminContent();
                     
                     alert('Announcement added successfully!');
                 } catch (error) {
@@ -1645,8 +1565,7 @@
                     
                     // Reload events
                     loadEvents();
-                    loadAdminEvents();
-                    loadAdminDashboard();
+                    loadAdminContent();
                     
                     alert('Event added successfully!');
                 } catch (error) {
@@ -1681,8 +1600,7 @@
                     
                     // Reload clubs
                     loadClubs();
-                    loadAdminClubs();
-                    loadAdminDashboard();
+                    loadAdminContent();
                     
                     alert('Club added successfully!');
                 } catch (error) {
@@ -1699,6 +1617,14 @@
                 const selectedLanguage = this.value;
                 alert(`Language changed to ${this.options[this.selectedIndex].text}. In a real application, the website content would be translated.`);
             });
+        }
+
+        // Load admin content
+        async function loadAdminContent() {
+            await loadAdminAnnouncements();
+            await loadAdminEvents();
+            await loadAdminClubs();
+            await loadAdminStats();
         }
 
         // Load admin announcements
@@ -1732,7 +1658,6 @@
                         <div class="announcement-date">Posted on: ${announcement.createdAt.toDate().toLocaleDateString()}</div>
                         <p>${announcement.content}</p>
                         <div style="margin-top: 10px;">
-                            <button class="btn-action btn-edit">Edit</button>
                             <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
                         </div>
                     `;
@@ -1745,7 +1670,7 @@
                                 await db.collection('announcements').doc(doc.id).delete();
                                 loadAdminAnnouncements();
                                 loadAnnouncements();
-                                loadAdminDashboard();
+                                loadAdminStats();
                                 alert('Announcement deleted successfully!');
                             } catch (error) {
                                 console.error('Error deleting announcement:', error);
@@ -1794,7 +1719,6 @@
                         <p><strong>Time:</strong> ${event.time}</p>
                         <p><strong>Location:</strong> ${event.location}</p>
                         <div style="margin-top: 10px;">
-                            <button class="btn-action btn-edit">Edit</button>
                             <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
                         </div>
                     `;
@@ -1807,7 +1731,7 @@
                                 await db.collection('events').doc(doc.id).delete();
                                 loadAdminEvents();
                                 loadEvents();
-                                loadAdminDashboard();
+                                loadAdminStats();
                                 alert('Event deleted successfully!');
                             } catch (error) {
                                 console.error('Error deleting event:', error);
@@ -1857,7 +1781,6 @@
                             <p><strong>Meeting:</strong> ${club.meetingDay}s, ${club.meetingTime}</p>
                             <p><strong>Advisor:</strong> ${club.advisor}</p>
                             <div style="margin-top: 10px;">
-                                <button class="btn-action btn-edit">Edit</button>
                                 <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
                             </div>
                         </div>
@@ -1871,7 +1794,7 @@
                                 await db.collection('clubs').doc(doc.id).delete();
                                 loadAdminClubs();
                                 loadClubs();
-                                loadAdminDashboard();
+                                loadAdminStats();
                                 alert('Club deleted successfully!');
                             } catch (error) {
                                 console.error('Error deleting club:', error);
@@ -1887,47 +1810,8 @@
             }
         }
 
-        // Load admin users
-        async function loadAdminUsers() {
-            try {
-                const snapshot = await db.collection('users').get();
-                
-                const container = document.getElementById('admin-users-list');
-                
-                if (snapshot.empty) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">people</i>
-                            <h3>No Users Yet</h3>
-                            <p>User accounts will appear here once registered.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = '';
-                
-                snapshot.forEach(doc => {
-                    const user = doc.data();
-                    const element = document.createElement('div');
-                    element.className = 'announcement-item';
-                    element.innerHTML = `
-                        <div class="announcement-title">${user.name}</div>
-                        <div class="announcement-date">Email: ${user.email} | Role: ${user.role}</div>
-                        <div style="margin-top: 10px;">
-                            <button class="btn-action btn-edit">Edit Role</button>
-                        </div>
-                    `;
-                    
-                    container.appendChild(element);
-                });
-            } catch (error) {
-                console.error('Error loading admin users:', error);
-            }
-        }
-
-        // Load admin dashboard
-        async function loadAdminDashboard() {
+        // Load admin statistics
+        async function loadAdminStats() {
             try {
                 // Get counts
                 const announcementsSnapshot = await db.collection('announcements').get();
@@ -1940,21 +1824,8 @@
                 document.getElementById('total-events').textContent = eventsSnapshot.size;
                 document.getElementById('total-clubs').textContent = clubsSnapshot.size;
                 document.getElementById('total-users').textContent = usersSnapshot.size;
-                
-                // Load recent activity
-                const recentActivityContainer = document.getElementById('recent-activity');
-                
-                // For now, we'll just show a simple message
-                // In a real app, you would track user actions and display them here
-                recentActivityContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="material-icons">history</i>
-                        <h3>No Recent Activity</h3>
-                        <p>Activity will appear here as you manage the website.</p>
-                    </div>
-                `;
             } catch (error) {
-                console.error('Error loading admin dashboard:', error);
+                console.error('Error loading admin stats:', error);
             }
         }
 
@@ -1969,15 +1840,9 @@
                 document.getElementById('email').value = currentUser.email;
             }
             
-            // Show admin panel if user is admin
+            // Show admin nav item if user is admin
             if (userRole === 'admin') {
-                document.querySelector('header').style.display = 'none';
-                document.querySelector('main').style.display = 'none';
-                document.querySelector('footer').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-                
-                // Load admin dashboard
-                loadAdminDashboard();
+                document.getElementById('admin-nav-item').style.display = 'list-item';
             }
         }
 
