@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>School Website</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
+.container{max-width:700px;margin:40px auto;background:#fff;padding:20px;border-radius:8px}
+#loginBox,#adminPanel,#chatBox{display:none}
+input,button,select{padding:10px;margin:6px 0;width:100%;box-sizing:border-box}
+.message{padding:8px;margin:5px 0;border-radius:5px;background:#eaeaea}
+.admin{background:#d0ffe4}
+.language-select{width:50%;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2 id="title">School Website</h2>
+
+<!-- LANGUAGE SELECT -->
+<select id="lang" class="language-select" onchange="changeLang()">
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="ar">العربية</option>
+</select>
+
+<!-- LOGIN -->
+<div id="loginBox">
+    <h3 id="loginTitle">Login</h3>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button id="loginBtn" onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+    <h3 id="adminTitle">Admin Panel</h3>
+    <p id="welcomeMsg">Welcome Admin!</p>
+    <button id="openChatBtn" onclick="showChat()">Open Admin Chat</button>
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+</div>
+
+<!-- ADMIN CHAT -->
+<div id="chatBox">
+    <h3 id="chatTitle">Admin Chat</h3>
+    <div id="messages" style="height:300px;overflow-y:auto;border:1px solid #ccc;padding:5px;"></div>
+    <input id="msgInput" placeholder="Type a message...">
+    <button id="sendBtn" onclick="sendMessage()">Send</button>
+    <br><br>
+    <button onclick="backToAdmin()">Back</button>
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+// Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// Your Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
+  authDomain: "bniyekhlef-high-school.firebaseapp.com",
+  projectId: "bniyekhlef-high-school",
+  storageBucket: "bniyekhlef-high-school.firebasestorage.app",
+  messagingSenderId: "807833913334",
+  appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
+  measurementId: "G-QCWNGXXRPP"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Admin UID
+const adminUID = "Tyr4Z1RSZEO3oMi1Dhi92nZGWKj1";
+
+// Language Strings
+const langData = {
+  en: {
+    title:"School Website", login:"Login", email:"Email", password:"Password", loginBtn:"Login",
+    welcome:"Welcome Admin!", openChat:"Open Admin Chat", logout:"Logout",
+    chatTitle:"Admin Chat", msgInput:"Type a message..."
+  },
+  fr: {
+    title:"Site de l'école", login:"Connexion", email:"Email", password:"Mot de passe", loginBtn:"Se connecter",
+    welcome:"Bienvenue Admin!", openChat:"Ouvrir le Chat Admin", logout:"Se déconnecter",
+    chatTitle:"Chat Admin", msgInput:"Tapez un message..."
+  },
+  ar: {
+    title:"موقع المدرسة", login:"تسجيل الدخول", email:"البريد الإلكتروني", password:"كلمة المرور", loginBtn:"تسجيل الدخول",
+    welcome:"مرحبا بالمشرف!", openChat:"افتح دردشة المشرف", logout:"تسجيل الخروج",
+    chatTitle:"دردشة المشرف", msgInput:"اكتب رسالة..."
+  }
+};
+
+// Show login on load
+document.getElementById("loginBox").style.display = "block";
+
+// Change Language
+function changeLang(){
+    const l = document.getElementById("lang").value;
+    const d = langData[l];
+    document.getElementById("title").textContent = d.title;
+    document.getElementById("loginTitle").textContent = d.login;
+    document.getElementById("email").placeholder = d.email;
+    document.getElementById("password").placeholder = d.password;
+    document.getElementById("loginBtn").textContent = d.loginBtn;
+    document.getElementById("welcomeMsg").textContent = d.welcome;
+    document.getElementById("openChatBtn").textContent = d.openChat;
+    document.getElementById("logoutBtn").textContent = d.logout;
+    document.getElementById("chatTitle").textContent = d.chatTitle;
+    document.getElementById("msgInput").placeholder = d.msgInput;
+}
+
+// LOGIN FUNCTION
+function login(){
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth,email,password)
+    .then(userCred=>{
+        if(userCred.user.uid === adminUID){
+            document.getElementById("loginBox").style.display = "none";
+            document.getElementById("adminPanel").style.display = "block";
+        } else {
+            alert("Not an admin");
+            signOut(auth);
+        }
+    })
+    .catch(err=>alert(err.message));
+}
+
+// LOGOUT FUNCTION
+function logout(){
+    signOut(auth);
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("chatBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+}
+
+// SHOW CHAT
+function showChat(){
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("chatBox").style.display = "block";
+    loadChat();
+}
+
+function backToAdmin(){
+    document.getElementById("chatBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+}
+
+// LOAD CHAT REALTIME
+function loadChat(){
+    const q = query(collection(db,"admin_chat"),orderBy("time"));
+    onSnapshot(q,snap=>{
+        const box = document.getElementById("messages");
+        box.innerHTML = "";
+        snap.forEach(doc=>{
+            const data = doc.data();
+            const div = document.createElement("div");
+            div.className = "message" + (data.uid===auth.currentUser.uid?" admin":"");
+            div.textContent = data.name + ": " + data.text;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        });
+    });
+}
+
+// SEND MESSAGE
+function sendMessage(){
+    const text = document.getElementById("msgInput").value;
+    if(text.trim()==="") return;
+    addDoc(collection(db,"admin_chat"),{
+        text:text,
+        uid:auth.currentUser.uid,
+        name:auth.currentUser.email,
+        time:serverTimestamp()
+    });
+    document.getElementById("msgInput").value = "";
+}
+
+</script>
+
+</body>
+</html>
