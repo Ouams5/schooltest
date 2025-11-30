@@ -2,66 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>School Website</title>
+<title>Bni Yekhlef High School</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
-.container{max-width:700px;margin:40px auto;background:#fff;padding:20px;border-radius:8px}
-#loginBox,#adminPanel,#chatBox{display:none}
-input,button,select{padding:10px;margin:6px 0;width:100%;box-sizing:border-box}
-.message{padding:8px;margin:5px 0;border-radius:5px;background:#eaeaea}
-.admin{background:#d0ffe4}
-.language-select{width:50%;margin-bottom:10px}
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #f2f4f7;
+    }
+
+    /* Notification system */
+    #notifBox {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+    .notif {
+        background: #333;
+        color: white;
+        padding: 12px 18px;
+        margin-top: 10px;
+        border-radius: 6px;
+        opacity: 0;
+        transform: translateX(30px);
+        animation: slideIn 0.4s forwards;
+    }
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Login/Register UI */
+    .center-box {
+        max-width: 350px;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        margin: 80px auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 15px;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #004aad;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    /* Admin Panel */
+    #adminPanel {
+        display: none;
+        padding: 20px;
+    }
+
+    /* Chat */
+    #chatBox {
+        width: 100%;
+        height: 250px;
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+
 </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Notification box -->
+<div id="notifBox"></div>
 
-<h2 id="title">School Website</h2>
+<!-- Login/Register Page -->
+<div class="center-box" id="authBox">
+<h2 id="schoolName">Bni Yekhlef High School</h2>
 
-<!-- LANGUAGE SELECT -->
-<select id="lang" class="language-select" onchange="changeLang()">
-    <option value="en">English</option>
-    <option value="fr">Français</option>
-    <option value="ar">العربية</option>
-</select>
+<h3 id="authTitle">Login</h3>
 
-<!-- LOGIN -->
-<div id="loginBox">
-    <h3 id="loginTitle">Login</h3>
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <button id="loginBtn" onclick="login()">Login</button>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Log In</button>
+
+<button onclick="showRegister()">Create Account</button>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- Admin Panel -->
 <div id="adminPanel">
-    <h3 id="adminTitle">Admin Panel</h3>
-    <p id="welcomeMsg">Welcome Admin!</p>
-    <button id="openChatBtn" onclick="showChat()">Open Admin Chat</button>
-    <button id="logoutBtn" onclick="logout()">Logout</button>
+<h2>Admin Panel</h2>
+
+<h3>Admin Chat</h3>
+<div id="chatBox"></div>
+<input id="chatInput" placeholder="Type message">
+<button onclick="sendMessage()">Send</button>
+
+<br><br>
+<button onclick="logout()">Log Out</button>
 </div>
 
-<!-- ADMIN CHAT -->
-<div id="chatBox">
-    <h3 id="chatTitle">Admin Chat</h3>
-    <div id="messages" style="height:300px;overflow-y:auto;border:1px solid #ccc;padding:5px;"></div>
-    <input id="msgInput" placeholder="Type a message...">
-    <button id="sendBtn" onclick="sendMessage()">Send</button>
-    <br><br>
-    <button onclick="backToAdmin()">Back</button>
-</div>
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-</div>
-
-<!-- FIREBASE -->
-<script type="module">
-// Firebase Imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-// Your Firebase config
+<script>
+/* -----------------------------
+       FIREBASE CONNECT
+-------------------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
   authDomain: "bniyekhlef-high-school.firebaseapp.com",
@@ -72,121 +138,107 @@ const firebaseConfig = {
   measurementId: "G-QCWNGXXRPP"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// Admin UID
-const adminUID = "Tyr4Z1RSZEO3oMi1Dhi92nZGWKj1";
+/* -----------------------------
+        NOTIFICATION SYSTEM
+-------------------------------- */
+function notify(msg) {
+    const box = document.getElementById("notifBox");
+    const div = document.createElement("div");
+    div.className = "notif";
+    div.innerText = msg;
+    box.appendChild(div);
 
-// Language Strings
-const langData = {
-  en: {
-    title:"School Website", login:"Login", email:"Email", password:"Password", loginBtn:"Login",
-    welcome:"Welcome Admin!", openChat:"Open Admin Chat", logout:"Logout",
-    chatTitle:"Admin Chat", msgInput:"Type a message..."
-  },
-  fr: {
-    title:"Site de l'école", login:"Connexion", email:"Email", password:"Mot de passe", loginBtn:"Se connecter",
-    welcome:"Bienvenue Admin!", openChat:"Ouvrir le Chat Admin", logout:"Se déconnecter",
-    chatTitle:"Chat Admin", msgInput:"Tapez un message..."
-  },
-  ar: {
-    title:"موقع المدرسة", login:"تسجيل الدخول", email:"البريد الإلكتروني", password:"كلمة المرور", loginBtn:"تسجيل الدخول",
-    welcome:"مرحبا بالمشرف!", openChat:"افتح دردشة المشرف", logout:"تسجيل الخروج",
-    chatTitle:"دردشة المشرف", msgInput:"اكتب رسالة..."
-  }
-};
-
-// Show login on load
-document.getElementById("loginBox").style.display = "block";
-
-// Change Language
-function changeLang(){
-    const l = document.getElementById("lang").value;
-    const d = langData[l];
-    document.getElementById("title").textContent = d.title;
-    document.getElementById("loginTitle").textContent = d.login;
-    document.getElementById("email").placeholder = d.email;
-    document.getElementById("password").placeholder = d.password;
-    document.getElementById("loginBtn").textContent = d.loginBtn;
-    document.getElementById("welcomeMsg").textContent = d.welcome;
-    document.getElementById("openChatBtn").textContent = d.openChat;
-    document.getElementById("logoutBtn").textContent = d.logout;
-    document.getElementById("chatTitle").textContent = d.chatTitle;
-    document.getElementById("msgInput").placeholder = d.msgInput;
+    setTimeout(() => {
+        div.style.opacity = "0";
+        setTimeout(() => div.remove(), 500);
+    }, 3000);
 }
 
-// LOGIN FUNCTION
-function login(){
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    signInWithEmailAndPassword(auth,email,password)
-    .then(userCred=>{
-        if(userCred.user.uid === adminUID){
-            document.getElementById("loginBox").style.display = "none";
-            document.getElementById("adminPanel").style.display = "block";
-        } else {
-            alert("Not an admin");
-            signOut(auth);
-        }
-    })
-    .catch(err=>alert(err.message));
+/* -----------------------------
+         REGISTER SYSTEM
+-------------------------------- */
+function showRegister() {
+    document.getElementById("authTitle").innerText = "Create Account";
+    document.querySelector("#authBox button:nth-child(5)").onclick = register;
 }
 
-// LOGOUT FUNCTION
-function logout(){
-    signOut(auth);
-    document.getElementById("adminPanel").style.display = "none";
-    document.getElementById("chatBox").style.display = "none";
-    document.getElementById("loginBox").style.display = "block";
+function register() {
+    const email = email.value;
+    const pass = password.value;
+
+    auth.createUserWithEmailAndPassword(email, pass)
+        .then(() => notify("Account created successfully!"))
+        .catch(e => notify(e.message));
 }
 
-// SHOW CHAT
-function showChat(){
-    document.getElementById("adminPanel").style.display = "none";
-    document.getElementById("chatBox").style.display = "block";
-    loadChat();
+/* -----------------------------
+          LOGIN SYSTEM
+-------------------------------- */
+function login() {
+    auth.signInWithEmailAndPassword(email.value, password.value)
+        .then(() => notify("Logged in successfully!"))
+        .catch(e => notify(e.message));
 }
 
-function backToAdmin(){
-    document.getElementById("chatBox").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
+/* -----------------------------
+         LOGOUT
+-------------------------------- */
+function logout() {
+    auth.signOut();
+    notify("Logged out.");
+    location.reload();
 }
 
-// LOAD CHAT REALTIME
-function loadChat(){
-    const q = query(collection(db,"admin_chat"),orderBy("time"));
-    onSnapshot(q,snap=>{
-        const box = document.getElementById("messages");
-        box.innerHTML = "";
-        snap.forEach(doc=>{
-            const data = doc.data();
-            const div = document.createElement("div");
-            div.className = "message" + (data.uid===auth.currentUser.uid?" admin":"");
-            div.textContent = data.name + ": " + data.text;
-            box.appendChild(div);
-            box.scrollTop = box.scrollHeight;
+/* -----------------------------
+     AUTH STATE LISTENER
+-------------------------------- */
+auth.onAuthStateChanged(user => {
+    if (user) {
+        db.collection("admins").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                // ADMIN LOGGED IN
+                document.getElementById("authBox").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                notify("Welcome Admin!");
+                loadChat();
+            } else {
+                notify("You are not an admin.");
+                auth.signOut();
+            }
         });
-    });
+    }
+});
+
+/* -----------------------------
+          CHAT SYSTEM
+-------------------------------- */
+function loadChat() {
+    db.collection("chat")
+        .orderBy("time")
+        .onSnapshot(snap => {
+            let html = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                html += `<p><b>${d.author}:</b> ${d.msg}</p>`;
+            });
+            document.getElementById("chatBox").innerHTML = html;
+        });
 }
 
-// SEND MESSAGE
-function sendMessage(){
-    const text = document.getElementById("msgInput").value;
-    if(text.trim()==="") return;
-    addDoc(collection(db,"admin_chat"),{
-        text:text,
-        uid:auth.currentUser.uid,
-        name:auth.currentUser.email,
-        time:serverTimestamp()
+function sendMessage() {
+    if (!chatInput.value) return;
+    const user = auth.currentUser;
+    db.collection("chat").add({
+        msg: chatInput.value,
+        author: user.email,
+        time: Date.now()
     });
-    document.getElementById("msgInput").value = "";
+    chatInput.value = "";
 }
-
 </script>
-
 </body>
 </html>
