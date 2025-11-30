@@ -530,6 +530,19 @@
             color: #bbb;
         }
         
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-container {
@@ -605,29 +618,21 @@
                 </div>
                 <div class="card">
                     <h3><i class="material-icons">star</i> Featured Announcements</h3>
-                    <div class="announcement-item">
-                        <div class="announcement-title">School Reopening Date</div>
-                        <div class="announcement-date">Posted on: September 1, 2023</div>
-                        <p>The new academic year will begin on September 15, 2023. Please check the school portal for your class schedules.</p>
-                    </div>
-                    <div class="announcement-item">
-                        <div class="announcement-title">Parent-Teacher Meeting</div>
-                        <div class="announcement-date">Posted on: August 25, 2023</div>
-                        <p>The annual parent-teacher meeting is scheduled for October 5, 2023. More details will be shared soon.</p>
+                    <div id="featured-announcements">
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Check back later for school announcements.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
                     <h3><i class="material-icons">event</i> Upcoming Events</h3>
-                    <div class="events-grid">
-                        <div class="event-card">
-                            <div class="event-date">September 20, 2023</div>
-                            <h4>Science Fair</h4>
-                            <p>Annual science fair showcasing student projects and innovations.</p>
-                        </div>
-                        <div class="event-card">
-                            <div class="event-date">October 10, 2023</div>
-                            <h4>Sports Day</h4>
-                            <p>Inter-class competitions and athletic events for all grades.</p>
+                    <div id="featured-events">
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Scheduled</h3>
+                            <p>Check back later for upcoming events.</p>
                         </div>
                     </div>
                 </div>
@@ -637,25 +642,12 @@
             <section id="announcements" class="page-content">
                 <h2 class="page-title">Announcements</h2>
                 <div class="card">
-                    <div class="announcement-item">
-                        <div class="announcement-title">School Reopening Date</div>
-                        <div class="announcement-date">Posted on: September 1, 2023</div>
-                        <p>The new academic year will begin on September 15, 2023. Please check the school portal for your class schedules.</p>
-                    </div>
-                    <div class="announcement-item">
-                        <div class="announcement-title">Parent-Teacher Meeting</div>
-                        <div class="announcement-date">Posted on: August 25, 2023</div>
-                        <p>The annual parent-teacher meeting is scheduled for October 5, 2023. More details will be shared soon.</p>
-                    </div>
-                    <div class="announcement-item">
-                        <div class="announcement-title">Library Renovation</div>
-                        <div class="announcement-date">Posted on: August 20, 2023</div>
-                        <p>The school library will be closed for renovation from September 1-30, 2023. Online resources will remain accessible.</p>
-                    </div>
-                    <div class="announcement-item">
-                        <div class="announcement-title">Scholarship Applications</div>
-                        <div class="announcement-date">Posted on: August 15, 2023</div>
-                        <p>Applications for the Merit Scholarship Program are now open. Deadline is October 15, 2023.</p>
+                    <div id="all-announcements">
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Check back later for school announcements.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -664,34 +656,11 @@
             <section id="events" class="page-content">
                 <h2 class="page-title">Events</h2>
                 <div class="card">
-                    <div class="events-grid">
-                        <div class="event-card">
-                            <div class="event-date">September 20, 2023</div>
-                            <h4>Science Fair</h4>
-                            <p>Annual science fair showcasing student projects and innovations.</p>
-                            <p><strong>Time:</strong> 9:00 AM - 3:00 PM</p>
-                            <p><strong>Location:</strong> School Auditorium</p>
-                        </div>
-                        <div class="event-card">
-                            <div class="event-date">October 10, 2023</div>
-                            <h4>Sports Day</h4>
-                            <p>Inter-class competitions and athletic events for all grades.</p>
-                            <p><strong>Time:</strong> 8:00 AM - 4:00 PM</p>
-                            <p><strong>Location:</strong> School Grounds</p>
-                        </div>
-                        <div class="event-card">
-                            <div class="event-date">November 15, 2023</div>
-                            <h4>Cultural Festival</h4>
-                            <p>Celebration of diverse cultures with performances, food, and exhibits.</p>
-                            <p><strong>Time:</strong> 10:00 AM - 6:00 PM</p>
-                            <p><strong>Location:</strong> School Campus</p>
-                        </div>
-                        <div class="event-card">
-                            <div class="event-date">December 20, 2023</div>
-                            <h4>Winter Concert</h4>
-                            <p>Musical performances by school bands, choirs, and orchestra.</p>
-                            <p><strong>Time:</strong> 6:00 PM - 8:00 PM</p>
-                            <p><strong>Location:</strong> School Auditorium</p>
+                    <div id="all-events">
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Scheduled</h3>
+                            <p>Check back later for upcoming events.</p>
                         </div>
                     </div>
                 </div>
@@ -701,46 +670,11 @@
             <section id="clubs" class="page-content">
                 <h2 class="page-title">Clubs</h2>
                 <div class="card">
-                    <div class="clubs-grid">
-                        <div class="club-card">
-                            <div class="club-image">
-                                <i class="material-icons">science</i>
-                            </div>
-                            <div class="club-info">
-                                <div class="club-name">Science Club</div>
-                                <p>Explore scientific concepts through experiments and projects.</p>
-                                <p><strong>Meeting:</strong> Tuesdays, 3:30 PM</p>
-                            </div>
-                        </div>
-                        <div class="club-card">
-                            <div class="club-image">
-                                <i class="material-icons">sports_soccer</i>
-                            </div>
-                            <div class="club-info">
-                                <div class="club-name">Soccer Club</div>
-                                <p>Develop soccer skills and compete in friendly matches.</p>
-                                <p><strong>Meeting:</strong> Mondays & Wednesdays, 4:00 PM</p>
-                            </div>
-                        </div>
-                        <div class="club-card">
-                            <div class="club-image">
-                                <i class="material-icons">brush</i>
-                            </div>
-                            <div class="club-info">
-                                <div class="club-name">Art Club</div>
-                                <p>Express creativity through various art forms and mediums.</p>
-                                <p><strong>Meeting:</strong> Thursdays, 3:30 PM</p>
-                            </div>
-                        </div>
-                        <div class="club-card">
-                            <div class="club-image">
-                                <i class="material-icons">code</i>
-                            </div>
-                            <div class="club-info">
-                                <div class="club-name">Coding Club</div>
-                                <p>Learn programming languages and develop software projects.</p>
-                                <p><strong>Meeting:</strong> Fridays, 3:30 PM</p>
-                            </div>
+                    <div id="all-clubs">
+                        <div class="empty-state">
+                            <i class="material-icons">groups</i>
+                            <h3>No Clubs Available</h3>
+                            <p>Check back later for school clubs information.</p>
                         </div>
                     </div>
                 </div>
@@ -753,34 +687,34 @@
                     <h3><i class="material-icons">person</i> Personal Information</h3>
                     <div class="form-group">
                         <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" class="form-control" value="John Doe" readonly>
+                        <input type="text" id="full-name" class="form-control" value="Not available" readonly>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" value="john.doe@example.com" readonly>
+                        <input type="email" id="email" class="form-control" value="Not available" readonly>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" class="form-control" value="+1 (555) 123-4567" readonly>
+                        <input type="tel" id="phone" class="form-control" value="Not available" readonly>
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <textarea id="address" class="form-control" readonly>123 Main Street, City, State 12345</textarea>
+                        <textarea id="address" class="form-control" readonly>Not available</textarea>
                     </div>
                 </div>
                 <div class="card">
                     <h3><i class="material-icons">school</i> Academic Information</h3>
                     <div class="form-group">
                         <label for="grade">Grade/Class</label>
-                        <input type="text" id="grade" class="form-control" value="10th Grade" readonly>
+                        <input type="text" id="grade" class="form-control" value="Not available" readonly>
                     </div>
                     <div class="form-group">
                         <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" class="form-control" value="GS2023001" readonly>
+                        <input type="text" id="student-id" class="form-control" value="Not available" readonly>
                     </div>
                     <div class="form-group">
                         <label for="advisor">Academic Advisor</label>
-                        <input type="text" id="advisor" class="form-control" value="Dr. Sarah Johnson" readonly>
+                        <input type="text" id="advisor" class="form-control" value="Not available" readonly>
                     </div>
                 </div>
             </section>
@@ -899,10 +833,10 @@
                 <nav>
                     <ul>
                         <li><a href="#" class="admin-nav-link active" data-admin-page="dashboard"><i class="material-icons">dashboard</i> Dashboard</a></li>
-                        <li><a href="#" class="admin-nav-link" data-admin-page="users"><i class="material-icons">people</i> Users</a></li>
                         <li><a href="#" class="admin-nav-link" data-admin-page="announcements-admin"><i class="material-icons">campaign</i> Announcements</a></li>
                         <li><a href="#" class="admin-nav-link" data-admin-page="events-admin"><i class="material-icons">event</i> Events</a></li>
                         <li><a href="#" class="admin-nav-link" data-admin-page="clubs-admin"><i class="material-icons">groups</i> Clubs</a></li>
+                        <li><a href="#" class="admin-nav-link" data-admin-page="users-admin"><i class="material-icons">people</i> Users</a></li>
                     </ul>
                 </nav>
                 <div>
@@ -916,113 +850,31 @@
                 <h2 class="page-title">Admin Dashboard</h2>
                 <div class="admin-stats">
                     <div class="stat-card">
-                        <div class="stat-number">1,254</div>
-                        <div class="stat-label">Total Students</div>
+                        <div class="stat-number" id="total-announcements">0</div>
+                        <div class="stat-label">Total Announcements</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">84</div>
-                        <div class="stat-label">Teaching Staff</div>
+                        <div class="stat-number" id="total-events">0</div>
+                        <div class="stat-label">Total Events</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">12</div>
+                        <div class="stat-number" id="total-clubs">0</div>
                         <div class="stat-label">Active Clubs</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">96%</div>
-                        <div class="stat-label">Attendance Rate</div>
+                        <div class="stat-number" id="total-users">0</div>
+                        <div class="stat-label">Total Users</div>
                     </div>
                 </div>
                 <div class="card">
                     <h3><i class="material-icons">trending_up</i> Recent Activity</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Activity</th>
-                                <th>User</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Sep 5, 2023</td>
-                                <td>New announcement posted</td>
-                                <td>Admin User</td>
-                            </tr>
-                            <tr>
-                                <td>Sep 4, 2023</td>
-                                <td>Event created: Science Fair</td>
-                                <td>Admin User</td>
-                            </tr>
-                            <tr>
-                                <td>Sep 3, 2023</td>
-                                <td>New student registered</td>
-                                <td>System</td>
-                            </tr>
-                            <tr>
-                                <td>Sep 2, 2023</td>
-                                <td>Club membership updated</td>
-                                <td>Admin User</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Admin Users -->
-            <section id="users" class="admin-page-content">
-                <h2 class="page-title">User Management</h2>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3><i class="material-icons">people</i> All Users</h3>
-                        <button class="btn btn-register">Add New User</button>
+                    <div id="recent-activity">
+                        <div class="empty-state">
+                            <i class="material-icons">history</i>
+                            <h3>No Recent Activity</h3>
+                            <p>Activity will appear here as you manage the website.</p>
+                        </div>
                     </div>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>GS2023001</td>
-                                <td>John Doe</td>
-                                <td>john.doe@example.com</td>
-                                <td>Student</td>
-                                <td>Active</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GS2023002</td>
-                                <td>Jane Smith</td>
-                                <td>jane.smith@example.com</td>
-                                <td>Student</td>
-                                <td>Active</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TCH001</td>
-                                <td>Dr. Sarah Johnson</td>
-                                <td>s.johnson@example.com</td>
-                                <td>Teacher</td>
-                                <td>Active</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </section>
 
@@ -1032,47 +884,15 @@
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3><i class="material-icons">campaign</i> All Announcements</h3>
-                        <button class="btn btn-register">Create Announcement</button>
+                        <button class="btn btn-register" id="add-announcement-btn">Add Announcement</button>
                     </div>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Date Posted</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>School Reopening Date</td>
-                                <td>Sep 1, 2023</td>
-                                <td>Published</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Parent-Teacher Meeting</td>
-                                <td>Aug 25, 2023</td>
-                                <td>Published</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Library Renovation</td>
-                                <td>Aug 20, 2023</td>
-                                <td>Published</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="admin-announcements-list">
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Add your first announcement to get started.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1082,51 +902,15 @@
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3><i class="material-icons">event</i> All Events</h3>
-                        <button class="btn btn-register">Create Event</button>
+                        <button class="btn btn-register" id="add-event-btn">Add Event</button>
                     </div>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Event Name</th>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Science Fair</td>
-                                <td>Sep 20, 2023</td>
-                                <td>School Auditorium</td>
-                                <td>Upcoming</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sports Day</td>
-                                <td>Oct 10, 2023</td>
-                                <td>School Grounds</td>
-                                <td>Upcoming</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Cultural Festival</td>
-                                <td>Nov 15, 2023</td>
-                                <td>School Campus</td>
-                                <td>Upcoming</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="admin-events-list">
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Yet</h3>
+                            <p>Add your first event to get started.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1136,53 +920,128 @@
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3><i class="material-icons">groups</i> All Clubs</h3>
-                        <button class="btn btn-register">Create Club</button>
+                        <button class="btn btn-register" id="add-club-btn">Add Club</button>
                     </div>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Club Name</th>
-                                <th>Advisor</th>
-                                <th>Members</th>
-                                <th>Meeting Schedule</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Science Club</td>
-                                <td>Dr. Robert Chen</td>
-                                <td>24</td>
-                                <td>Tuesdays, 3:30 PM</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Soccer Club</td>
-                                <td>Mr. James Wilson</td>
-                                <td>32</td>
-                                <td>Mon & Wed, 4:00 PM</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Art Club</td>
-                                <td>Ms. Emily Davis</td>
-                                <td>18</td>
-                                <td>Thursdays, 3:30 PM</td>
-                                <td>
-                                    <button class="btn-action btn-edit">Edit</button>
-                                    <button class="btn-action btn-delete">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="admin-clubs-list">
+                        <div class="empty-state">
+                            <i class="material-icons">groups</i>
+                            <h3>No Clubs Yet</h3>
+                            <p>Add your first club to get started.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            <!-- Admin Users -->
+            <section id="users-admin" class="admin-page-content">
+                <h2 class="page-title">User Management</h2>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3><i class="material-icons">people</i> All Users</h3>
+                    </div>
+                    <div id="admin-users-list">
+                        <div class="empty-state">
+                            <i class="material-icons">people</i>
+                            <h3>No Users Yet</h3>
+                            <p>User accounts will appear here once registered.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Add Announcement Modal -->
+    <div class="modal" id="add-announcement-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Announcement</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="add-announcement-form">
+                <div class="form-group">
+                    <label for="announcement-title">Title</label>
+                    <input type="text" id="announcement-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="announcement-content">Content</label>
+                    <textarea id="announcement-content" class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Announcement</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal" id="add-event-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Event</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="add-event-form">
+                <div class="form-group">
+                    <label for="event-title">Event Title</label>
+                    <input type="text" id="event-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Event Date</label>
+                    <input type="date" id="event-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-time">Event Time</label>
+                    <input type="time" id="event-time" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Location</label>
+                    <input type="text" id="event-location" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Club Modal -->
+    <div class="modal" id="add-club-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Club</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="add-club-form">
+                <div class="form-group">
+                    <label for="club-name">Club Name</label>
+                    <input type="text" id="club-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="club-description">Description</label>
+                    <textarea id="club-description" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="club-meeting-day">Meeting Day</label>
+                    <select id="club-meeting-day" class="form-control" required>
+                        <option value="">Select a day</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="club-meeting-time">Meeting Time</label>
+                    <input type="time" id="club-meeting-time" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="club-advisor">Club Advisor</label>
+                    <input type="text" id="club-advisor" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Club</button>
+            </form>
         </div>
     </div>
 
@@ -1228,110 +1087,899 @@
         let currentUser = null;
         let userRole = null;
 
-        // Page Navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        async function initializeApp() {
+            // Check if admin user exists, if not create it
+            await checkAndCreateAdminUser();
+            
+            // Load content for all users
+            loadPublicContent();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Check if admin user exists, create if not
+        async function checkAndCreateAdminUser() {
+            try {
+                const adminEmail = 'admin@school.com';
+                
+                // Try to sign in with admin credentials
+                try {
+                    await auth.signInWithEmailAndPassword(adminEmail, 'admin123');
+                    // If successful, admin already exists
+                    await auth.signOut();
+                    return;
+                } catch (error) {
+                    // Admin doesn't exist or credentials are wrong, create admin
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                        const userCredential = await auth.createUserWithEmailAndPassword(adminEmail, 'admin123');
+                        const adminUser = userCredential.user;
+                        
+                        // Create admin user document in Firestore
+                        await db.collection('users').doc(adminUser.uid).set({
+                            name: 'School Administrator',
+                            email: adminEmail,
+                            role: 'admin',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        
+                        console.log('Admin user created successfully');
+                        await auth.signOut();
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking/creating admin user:', error);
+            }
+        }
+
+        // Load public content (announcements, events, clubs)
+        async function loadPublicContent() {
+            await loadAnnouncements();
+            await loadEvents();
+            await loadClubs();
+        }
+
+        // Load announcements for public view
+        async function loadAnnouncements() {
+            try {
+                const snapshot = await db.collection('announcements')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const announcementsContainer = document.getElementById('all-announcements');
+                const featuredContainer = document.getElementById('featured-announcements');
+                
+                if (snapshot.empty) {
+                    // Show empty state
+                    announcementsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Check back later for school announcements.</p>
+                        </div>
+                    `;
+                    featuredContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Check back later for school announcements.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Clear containers
+                announcementsContainer.innerHTML = '';
+                featuredContainer.innerHTML = '';
+                
+                // Add announcements
+                snapshot.forEach((doc, index) => {
+                    const announcement = doc.data();
+                    const announcementElement = createAnnouncementElement(announcement);
+                    
+                    announcementsContainer.appendChild(announcementElement);
+                    
+                    // Add to featured (first 2 announcements)
+                    if (index < 2) {
+                        const featuredElement = createAnnouncementElement(announcement);
+                        featuredContainer.appendChild(featuredElement);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading announcements:', error);
+            }
+        }
+
+        // Create announcement HTML element
+        function createAnnouncementElement(announcement) {
+            const announcementDate = announcement.createdAt ? 
+                announcement.createdAt.toDate().toLocaleDateString() : 'Recent';
+            
+            const element = document.createElement('div');
+            element.className = 'announcement-item';
+            element.innerHTML = `
+                <div class="announcement-title">${announcement.title}</div>
+                <div class="announcement-date">Posted on: ${announcementDate}</div>
+                <p>${announcement.content}</p>
+            `;
+            
+            return element;
+        }
+
+        // Load events for public view
+        async function loadEvents() {
+            try {
+                const snapshot = await db.collection('events')
+                    .orderBy('date', 'asc')
+                    .get();
+                
+                const eventsContainer = document.getElementById('all-events');
+                const featuredContainer = document.getElementById('featured-events');
+                
+                if (snapshot.empty) {
+                    // Show empty state
+                    eventsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Scheduled</h3>
+                            <p>Check back later for upcoming events.</p>
+                        </div>
+                    `;
+                    featuredContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Scheduled</h3>
+                            <p>Check back later for upcoming events.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Clear containers
+                eventsContainer.innerHTML = '';
+                featuredContainer.innerHTML = '';
+                
+                // Add events
+                snapshot.forEach((doc, index) => {
+                    const event = doc.data();
+                    const eventElement = createEventElement(event);
+                    
+                    eventsContainer.appendChild(eventElement);
+                    
+                    // Add to featured (first 2 events)
+                    if (index < 2) {
+                        const featuredElement = createEventElement(event);
+                        featuredContainer.appendChild(featuredElement);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+        }
+
+        // Create event HTML element
+        function createEventElement(event) {
+            const eventDate = event.date ? 
+                new Date(event.date).toLocaleDateString() : 'Date TBD';
+            
+            const element = document.createElement('div');
+            element.className = 'event-card';
+            element.innerHTML = `
+                <div class="event-date">${eventDate}</div>
+                <h4>${event.title}</h4>
+                <p>${event.description}</p>
+                <p><strong>Time:</strong> ${event.time}</p>
+                <p><strong>Location:</strong> ${event.location}</p>
+            `;
+            
+            return element;
+        }
+
+        // Load clubs for public view
+        async function loadClubs() {
+            try {
+                const snapshot = await db.collection('clubs').get();
+                
+                const clubsContainer = document.getElementById('all-clubs');
+                
+                if (snapshot.empty) {
+                    // Show empty state
+                    clubsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">groups</i>
+                            <h3>No Clubs Available</h3>
+                            <p>Check back later for school clubs information.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Clear container
+                clubsContainer.innerHTML = '';
+                
+                // Add clubs
+                snapshot.forEach(doc => {
+                    const club = doc.data();
+                    const clubElement = createClubElement(club);
+                    clubsContainer.appendChild(clubElement);
+                });
+            } catch (error) {
+                console.error('Error loading clubs:', error);
+            }
+        }
+
+        // Create club HTML element
+        function createClubElement(club) {
+            const element = document.createElement('div');
+            element.className = 'club-card';
+            element.innerHTML = `
+                <div class="club-image">
+                    <i class="material-icons">groups</i>
+                </div>
+                <div class="club-info">
+                    <div class="club-name">${club.name}</div>
+                    <p>${club.description}</p>
+                    <p><strong>Meeting:</strong> ${club.meetingDay}s, ${club.meetingTime}</p>
+                    <p><strong>Advisor:</strong> ${club.advisor}</p>
+                </div>
+            `;
+            
+            return element;
+        }
+
+        // Set up all event listeners
+        function setupEventListeners() {
+            setupNavigation();
+            setupAuthEventListeners();
+            setupAdminEventListeners();
+            setupModalEventListeners();
+        }
+
+        // Set up navigation event listeners
+        function setupNavigation() {
+            // Regular page navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all page content
+                    document.querySelectorAll('.page-content').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show selected page content
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+
+            // Admin page navigation
+            document.querySelectorAll('.admin-nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all admin links
+                    document.querySelectorAll('.admin-nav-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked admin link
+                    this.classList.add('active');
+                    
+                    // Hide all admin page content
+                    document.querySelectorAll('.admin-page-content').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show selected admin page content
+                    const adminPageId = this.getAttribute('data-admin-page');
+                    document.getElementById(adminPageId).classList.add('active');
+                    
+                    // Load admin content if needed
+                    if (adminPageId === 'announcements-admin') {
+                        loadAdminAnnouncements();
+                    } else if (adminPageId === 'events-admin') {
+                        loadAdminEvents();
+                    } else if (adminPageId === 'clubs-admin') {
+                        loadAdminClubs();
+                    } else if (adminPageId === 'users-admin') {
+                        loadAdminUsers();
+                    } else if (adminPageId === 'dashboard') {
+                        loadAdminDashboard();
+                    }
+                });
+            });
+        }
+
+        // Set up authentication event listeners
+        function setupAuthEventListeners() {
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const loginModal = document.getElementById('login-modal');
+            const registerModal = document.getElementById('register-modal');
+            const closeModalButtons = document.querySelectorAll('.close-modal');
+            const switchToRegister = document.getElementById('switch-to-register');
+            const switchToLogin = document.getElementById('switch-to-login');
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutAdminBtn = document.getElementById('logout-admin');
+
+            // Show login modal
+            loginBtn.addEventListener('click', () => {
+                loginModal.style.display = 'flex';
+            });
+
+            // Show register modal
+            registerBtn.addEventListener('click', () => {
+                registerModal.style.display = 'flex';
+            });
+
+            // Close modals
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    clearErrorMessages();
+                });
+            });
+
+            // Switch between login and register modals
+            switchToRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'flex';
+                clearErrorMessages();
+            });
+
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.style.display = 'none';
+                loginModal.style.display = 'flex';
+                clearErrorMessages();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                        clearErrorMessages();
+                    }
+                });
+            });
+
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearErrorMessages();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                try {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    currentUser = userCredential.user;
+                    
+                    // Get user role from Firestore
+                    const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                    if (userDoc.exists) {
+                        userRole = userDoc.data().role;
+                        document.getElementById('user-name').textContent = userDoc.data().name;
+                        
+                        // Update UI based on role
+                        updateUIForUser();
+                        
+                        // Close modal
+                        loginModal.style.display = 'none';
+                        
+                        // Show success message
+                        alert('Login successful!');
+                    } else {
+                        showError('login-email-error', 'User data not found. Please contact administrator.');
+                        await auth.signOut();
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showError('login-email-error', error.message);
+                }
+            });
+
+            // Register form submission
+            document.getElementById('register-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearErrorMessages();
+                
+                const name = document.getElementById('register-name').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                
+                if (password !== confirmPassword) {
+                    showError('register-confirm-password-error', 'Passwords do not match!');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showError('register-password-error', 'Password must be at least 6 characters!');
+                    return;
+                }
+                
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    currentUser = userCredential.user;
+                    
+                    // Create user document in Firestore with default role 'student'
+                    await db.collection('users').doc(currentUser.uid).set({
+                        name: name,
+                        email: email,
+                        role: 'student',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    userRole = 'student';
+                    document.getElementById('user-name').textContent = name;
+                    
+                    // Update UI based on role
+                    updateUIForUser();
+                    
+                    // Close modal
+                    registerModal.style.display = 'none';
+                    
+                    // Show success message
+                    alert('Registration successful!');
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    showError('register-email-error', error.message);
+                }
+            });
+
+            // Logout functionality
+            function logout() {
+                auth.signOut().then(() => {
+                    currentUser = null;
+                    userRole = null;
+                    
+                    // Reset UI
+                    document.getElementById('auth-buttons').style.display = 'flex';
+                    document.getElementById('user-info').style.display = 'none';
+                    document.getElementById('admin-panel').style.display = 'none';
+                    document.querySelector('header').style.display = 'block';
+                    document.querySelector('main').style.display = 'block';
+                    document.querySelector('footer').style.display = 'block';
+                    
+                    // Show login modal
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    
+                    alert('You have been logged out.');
+                }).catch((error) => {
+                    console.error('Logout error:', error);
+                });
+            }
+
+            // Attach logout handlers
+            logoutBtn.addEventListener('click', logout);
+            logoutAdminBtn.addEventListener('click', logout);
+        }
+
+        // Set up admin event listeners
+        function setupAdminEventListeners() {
+            // Add announcement button
+            document.getElementById('add-announcement-btn').addEventListener('click', () => {
+                document.getElementById('add-announcement-modal').style.display = 'flex';
+            });
+
+            // Add event button
+            document.getElementById('add-event-btn').addEventListener('click', () => {
+                document.getElementById('add-event-modal').style.display = 'flex';
+            });
+
+            // Add club button
+            document.getElementById('add-club-btn').addEventListener('click', () => {
+                document.getElementById('add-club-modal').style.display = 'flex';
+            });
+
+            // Add announcement form submission
+            document.getElementById('add-announcement-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-                // Remove active class from all links
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                const title = document.getElementById('announcement-title').value;
+                const content = document.getElementById('announcement-content').value;
                 
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Hide all page content
-                document.querySelectorAll('.page-content').forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Show selected page content
-                const pageId = this.getAttribute('data-page');
-                document.getElementById(pageId).classList.add('active');
+                try {
+                    await db.collection('announcements').add({
+                        title: title,
+                        content: content,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Close modal and reset form
+                    document.getElementById('add-announcement-modal').style.display = 'none';
+                    document.getElementById('add-announcement-form').reset();
+                    
+                    // Reload announcements
+                    loadAnnouncements();
+                    loadAdminAnnouncements();
+                    loadAdminDashboard();
+                    
+                    alert('Announcement added successfully!');
+                } catch (error) {
+                    console.error('Error adding announcement:', error);
+                    alert('Error adding announcement. Please try again.');
+                }
             });
-        });
 
-        // Admin Page Navigation
-        document.querySelectorAll('.admin-nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
+            // Add event form submission
+            document.getElementById('add-event-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-                // Remove active class from all admin links
-                document.querySelectorAll('.admin-nav-link').forEach(l => l.classList.remove('active'));
+                const title = document.getElementById('event-title').value;
+                const date = document.getElementById('event-date').value;
+                const time = document.getElementById('event-time').value;
+                const location = document.getElementById('event-location').value;
+                const description = document.getElementById('event-description').value;
                 
-                // Add active class to clicked admin link
-                this.classList.add('active');
+                try {
+                    await db.collection('events').add({
+                        title: title,
+                        date: date,
+                        time: time,
+                        location: location,
+                        description: description,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Close modal and reset form
+                    document.getElementById('add-event-modal').style.display = 'none';
+                    document.getElementById('add-event-form').reset();
+                    
+                    // Reload events
+                    loadEvents();
+                    loadAdminEvents();
+                    loadAdminDashboard();
+                    
+                    alert('Event added successfully!');
+                } catch (error) {
+                    console.error('Error adding event:', error);
+                    alert('Error adding event. Please try again.');
+                }
+            });
+
+            // Add club form submission
+            document.getElementById('add-club-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
                 
-                // Hide all admin page content
-                document.querySelectorAll('.admin-page-content').forEach(page => {
-                    page.classList.remove('active');
+                const name = document.getElementById('club-name').value;
+                const description = document.getElementById('club-description').value;
+                const meetingDay = document.getElementById('club-meeting-day').value;
+                const meetingTime = document.getElementById('club-meeting-time').value;
+                const advisor = document.getElementById('club-advisor').value;
+                
+                try {
+                    await db.collection('clubs').add({
+                        name: name,
+                        description: description,
+                        meetingDay: meetingDay,
+                        meetingTime: meetingTime,
+                        advisor: advisor,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Close modal and reset form
+                    document.getElementById('add-club-modal').style.display = 'none';
+                    document.getElementById('add-club-form').reset();
+                    
+                    // Reload clubs
+                    loadClubs();
+                    loadAdminClubs();
+                    loadAdminDashboard();
+                    
+                    alert('Club added successfully!');
+                } catch (error) {
+                    console.error('Error adding club:', error);
+                    alert('Error adding club. Please try again.');
+                }
+            });
+        }
+
+        // Set up modal event listeners
+        function setupModalEventListeners() {
+            // Language selector
+            document.getElementById('language-select').addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                alert(`Language changed to ${this.options[this.selectedIndex].text}. In a real application, the website content would be translated.`);
+            });
+        }
+
+        // Load admin announcements
+        async function loadAdminAnnouncements() {
+            try {
+                const snapshot = await db.collection('announcements')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const container = document.getElementById('admin-announcements-list');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">campaign</i>
+                            <h3>No Announcements Yet</h3>
+                            <p>Add your first announcement to get started.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const announcement = doc.data();
+                    const element = document.createElement('div');
+                    element.className = 'announcement-item';
+                    element.innerHTML = `
+                        <div class="announcement-title">${announcement.title}</div>
+                        <div class="announcement-date">Posted on: ${announcement.createdAt.toDate().toLocaleDateString()}</div>
+                        <p>${announcement.content}</p>
+                        <div style="margin-top: 10px;">
+                            <button class="btn-action btn-edit">Edit</button>
+                            <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
+                        </div>
+                    `;
+                    
+                    // Add delete functionality
+                    const deleteBtn = element.querySelector('.btn-delete');
+                    deleteBtn.addEventListener('click', async () => {
+                        if (confirm('Are you sure you want to delete this announcement?')) {
+                            try {
+                                await db.collection('announcements').doc(doc.id).delete();
+                                loadAdminAnnouncements();
+                                loadAnnouncements();
+                                loadAdminDashboard();
+                                alert('Announcement deleted successfully!');
+                            } catch (error) {
+                                console.error('Error deleting announcement:', error);
+                                alert('Error deleting announcement. Please try again.');
+                            }
+                        }
+                    });
+                    
+                    container.appendChild(element);
                 });
+            } catch (error) {
+                console.error('Error loading admin announcements:', error);
+            }
+        }
+
+        // Load admin events
+        async function loadAdminEvents() {
+            try {
+                const snapshot = await db.collection('events')
+                    .orderBy('date', 'asc')
+                    .get();
                 
-                // Show selected admin page content
-                const adminPageId = this.getAttribute('data-admin-page');
-                document.getElementById(adminPageId).classList.add('active');
-            });
-        });
-
-        // Modal Functionality
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const loginModal = document.getElementById('login-modal');
-        const registerModal = document.getElementById('register-modal');
-        const closeModalButtons = document.querySelectorAll('.close-modal');
-        const switchToRegister = document.getElementById('switch-to-register');
-        const switchToLogin = document.getElementById('switch-to-login');
-        const adminPanel = document.getElementById('admin-panel');
-        const logoutAdminBtn = document.getElementById('logout-admin');
-        const logoutBtn = document.getElementById('logout-btn');
-        const authButtons = document.getElementById('auth-buttons');
-        const userInfo = document.getElementById('user-info');
-        const userName = document.getElementById('user-name');
-
-        // Show login modal
-        loginBtn.addEventListener('click', () => {
-            loginModal.style.display = 'flex';
-        });
-
-        // Show register modal
-        registerBtn.addEventListener('click', () => {
-            registerModal.style.display = 'flex';
-        });
-
-        // Close modals
-        closeModalButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-                registerModal.style.display = 'none';
-                clearErrorMessages();
-            });
-        });
-
-        // Switch between login and register modals
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'none';
-            registerModal.style.display = 'flex';
-            clearErrorMessages();
-        });
-
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'none';
-            loginModal.style.display = 'flex';
-            clearErrorMessages();
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
-                clearErrorMessages();
+                const container = document.getElementById('admin-events-list');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">event</i>
+                            <h3>No Events Yet</h3>
+                            <p>Add your first event to get started.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const event = doc.data();
+                    const element = document.createElement('div');
+                    element.className = 'event-card';
+                    element.innerHTML = `
+                        <div class="event-date">${new Date(event.date).toLocaleDateString()}</div>
+                        <h4>${event.title}</h4>
+                        <p>${event.description}</p>
+                        <p><strong>Time:</strong> ${event.time}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <div style="margin-top: 10px;">
+                            <button class="btn-action btn-edit">Edit</button>
+                            <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
+                        </div>
+                    `;
+                    
+                    // Add delete functionality
+                    const deleteBtn = element.querySelector('.btn-delete');
+                    deleteBtn.addEventListener('click', async () => {
+                        if (confirm('Are you sure you want to delete this event?')) {
+                            try {
+                                await db.collection('events').doc(doc.id).delete();
+                                loadAdminEvents();
+                                loadEvents();
+                                loadAdminDashboard();
+                                alert('Event deleted successfully!');
+                            } catch (error) {
+                                console.error('Error deleting event:', error);
+                                alert('Error deleting event. Please try again.');
+                            }
+                        }
+                    });
+                    
+                    container.appendChild(element);
+                });
+            } catch (error) {
+                console.error('Error loading admin events:', error);
             }
-            if (e.target === registerModal) {
-                registerModal.style.display = 'none';
-                clearErrorMessages();
+        }
+
+        // Load admin clubs
+        async function loadAdminClubs() {
+            try {
+                const snapshot = await db.collection('clubs').get();
+                
+                const container = document.getElementById('admin-clubs-list');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">groups</i>
+                            <h3>No Clubs Yet</h3>
+                            <p>Add your first club to get started.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const club = doc.data();
+                    const element = document.createElement('div');
+                    element.className = 'club-card';
+                    element.innerHTML = `
+                        <div class="club-image">
+                            <i class="material-icons">groups</i>
+                        </div>
+                        <div class="club-info">
+                            <div class="club-name">${club.name}</div>
+                            <p>${club.description}</p>
+                            <p><strong>Meeting:</strong> ${club.meetingDay}s, ${club.meetingTime}</p>
+                            <p><strong>Advisor:</strong> ${club.advisor}</p>
+                            <div style="margin-top: 10px;">
+                                <button class="btn-action btn-edit">Edit</button>
+                                <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add delete functionality
+                    const deleteBtn = element.querySelector('.btn-delete');
+                    deleteBtn.addEventListener('click', async () => {
+                        if (confirm('Are you sure you want to delete this club?')) {
+                            try {
+                                await db.collection('clubs').doc(doc.id).delete();
+                                loadAdminClubs();
+                                loadClubs();
+                                loadAdminDashboard();
+                                alert('Club deleted successfully!');
+                            } catch (error) {
+                                console.error('Error deleting club:', error);
+                                alert('Error deleting club. Please try again.');
+                            }
+                        }
+                    });
+                    
+                    container.appendChild(element);
+                });
+            } catch (error) {
+                console.error('Error loading admin clubs:', error);
             }
-        });
+        }
+
+        // Load admin users
+        async function loadAdminUsers() {
+            try {
+                const snapshot = await db.collection('users').get();
+                
+                const container = document.getElementById('admin-users-list');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="material-icons">people</i>
+                            <h3>No Users Yet</h3>
+                            <p>User accounts will appear here once registered.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const user = doc.data();
+                    const element = document.createElement('div');
+                    element.className = 'announcement-item';
+                    element.innerHTML = `
+                        <div class="announcement-title">${user.name}</div>
+                        <div class="announcement-date">Email: ${user.email} | Role: ${user.role}</div>
+                        <div style="margin-top: 10px;">
+                            <button class="btn-action btn-edit">Edit Role</button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(element);
+                });
+            } catch (error) {
+                console.error('Error loading admin users:', error);
+            }
+        }
+
+        // Load admin dashboard
+        async function loadAdminDashboard() {
+            try {
+                // Get counts
+                const announcementsSnapshot = await db.collection('announcements').get();
+                const eventsSnapshot = await db.collection('events').get();
+                const clubsSnapshot = await db.collection('clubs').get();
+                const usersSnapshot = await db.collection('users').get();
+                
+                // Update counts
+                document.getElementById('total-announcements').textContent = announcementsSnapshot.size;
+                document.getElementById('total-events').textContent = eventsSnapshot.size;
+                document.getElementById('total-clubs').textContent = clubsSnapshot.size;
+                document.getElementById('total-users').textContent = usersSnapshot.size;
+                
+                // Load recent activity
+                const recentActivityContainer = document.getElementById('recent-activity');
+                
+                // For now, we'll just show a simple message
+                // In a real app, you would track user actions and display them here
+                recentActivityContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="material-icons">history</i>
+                        <h3>No Recent Activity</h3>
+                        <p>Activity will appear here as you manage the website.</p>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading admin dashboard:', error);
+            }
+        }
+
+        // Update UI based on user role
+        function updateUIForUser() {
+            // Hide auth buttons, show user info
+            document.getElementById('auth-buttons').style.display = 'none';
+            document.getElementById('user-info').style.display = 'flex';
+            
+            // Update account info if available
+            if (currentUser) {
+                document.getElementById('email').value = currentUser.email;
+            }
+            
+            // Show admin panel if user is admin
+            if (userRole === 'admin') {
+                document.querySelector('header').style.display = 'none';
+                document.querySelector('main').style.display = 'none';
+                document.querySelector('footer').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                
+                // Load admin dashboard
+                loadAdminDashboard();
+            }
+        }
 
         // Clear error messages
         function clearErrorMessages() {
@@ -1348,133 +1996,6 @@
             errorElement.style.display = 'block';
         }
 
-        // Login form submission
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearErrorMessages();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                currentUser = userCredential.user;
-                
-                // Get user role from Firestore
-                const userDoc = await db.collection('users').doc(currentUser.uid).get();
-                if (userDoc.exists) {
-                    userRole = userDoc.data().role;
-                    userName.textContent = userDoc.data().name;
-                    
-                    // Update UI based on role
-                    updateUIForUser();
-                    
-                    // Close modal
-                    loginModal.style.display = 'none';
-                    
-                    // Show success message
-                    alert('Login successful!');
-                } else {
-                    showError('login-email-error', 'User data not found. Please contact administrator.');
-                    await auth.signOut();
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showError('login-email-error', error.message);
-            }
-        });
-
-        // Register form submission
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearErrorMessages();
-            
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                showError('register-confirm-password-error', 'Passwords do not match!');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError('register-password-error', 'Password must be at least 6 characters!');
-                return;
-            }
-            
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                currentUser = userCredential.user;
-                
-                // Create user document in Firestore with default role 'student'
-                await db.collection('users').doc(currentUser.uid).set({
-                    name: name,
-                    email: email,
-                    role: 'student',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                userRole = 'student';
-                userName.textContent = name;
-                
-                // Update UI based on role
-                updateUIForUser();
-                
-                // Close modal
-                registerModal.style.display = 'none';
-                
-                // Show success message
-                alert('Registration successful!');
-            } catch (error) {
-                console.error('Registration error:', error);
-                showError('register-email-error', error.message);
-            }
-        });
-
-        // Update UI based on user role
-        function updateUIForUser() {
-            // Hide auth buttons, show user info
-            authButtons.style.display = 'none';
-            userInfo.style.display = 'flex';
-            
-            // Show admin panel if user is admin
-            if (userRole === 'admin') {
-                document.querySelector('header').style.display = 'none';
-                document.querySelector('main').style.display = 'none';
-                document.querySelector('footer').style.display = 'none';
-                adminPanel.style.display = 'block';
-            }
-        }
-
-        // Logout functionality
-        function logout() {
-            auth.signOut().then(() => {
-                currentUser = null;
-                userRole = null;
-                
-                // Reset UI
-                authButtons.style.display = 'flex';
-                userInfo.style.display = 'none';
-                adminPanel.style.display = 'none';
-                document.querySelector('header').style.display = 'block';
-                document.querySelector('main').style.display = 'block';
-                document.querySelector('footer').style.display = 'block';
-                
-                // Show login modal
-                loginModal.style.display = 'none';
-                
-                alert('You have been logged out.');
-            }).catch((error) => {
-                console.error('Logout error:', error);
-            });
-        }
-
-        // Attach logout handlers
-        logoutBtn.addEventListener('click', logout);
-        logoutAdminBtn.addEventListener('click', logout);
-
         // Auth state observer
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -1484,7 +2005,7 @@
                 const userDoc = await db.collection('users').doc(user.uid).get();
                 if (userDoc.exists) {
                     userRole = userDoc.data().role;
-                    userName.textContent = userDoc.data().name;
+                    document.getElementById('user-name').textContent = userDoc.data().name;
                     
                     // Update UI based on role
                     updateUIForUser();
@@ -1494,12 +2015,6 @@
                 currentUser = null;
                 userRole = null;
             }
-        });
-
-        // Language selector
-        document.getElementById('language-select').addEventListener('change', function() {
-            const selectedLanguage = this.value;
-            alert(`Language changed to ${this.options[this.selectedIndex].text}. In a real application, the website content would be translated.`);
         });
     </script>
 </body>
