@@ -1,338 +1,225 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bni Yekhlef High School</title>
+<meta charset="UTF-8">
+<title>Bni Yekhlef High School — Auth System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Poppins Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --accent:#0a67d1;
-    --bg:#f4f6fb;
-    --card:#ffffff;
-    --muted:#6b7280;
-    --success:#16a34a;
-    --danger:#dc2626;
-    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center}
-  header{width:100%;padding:14px 20px;background:linear-gradient(90deg,var(--card),#fbfdff);box-shadow:0 4px 18px rgba(2,6,23,0.04);display:flex;justify-content:space-between;align-items:center}
-  .brand{font-weight:700;font-size:18px}
-  .controls{display:flex;gap:8px;align-items:center}
-  .btn{background:var(--accent);color:white;padding:8px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
-  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(10,103,209,0.12)}
-  .container{width:100%;max-width:980px;margin:28px;padding:16px}
-  .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.04)}
-  .grid{display:grid;grid-template-columns:1fr 380px;gap:18px}
-  .center{display:flex;flex-direction:column;gap:12px}
-  input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef7;background:#fff}
-  h1{margin:0 0 6px 0;font-size:20px}
-  p.lead{margin:0;color:var(--muted)}
-  .chatBox{height:360px;overflow:auto;border-radius:10px;padding:12px;background:#fbfdff;border:1px solid #eef2f7}
-  .msg{margin-bottom:10px;padding:10px;border-radius:8px;background:#f1f5f9}
-  .msg.me{background:linear-gradient(90deg,#dbeafe,#bfdbfe);align-self:flex-end}
-  .notif-wrap{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-  .notif{background:#111827;color:white;padding:10px 14px;border-radius:8px;box-shadow:0 8px 30px rgba(2,6,23,0.12);opacity:0;transform:translateX(20px)}
-  .notif.show{animation:popIn .28s forwards}
-  @keyframes popIn{to{opacity:1;transform:translateX(0)}}
-  .lang{padding:6px 10px;border-radius:8px;border:1px solid #e6eef7;background:#fff}
-  .small{font-size:13px;color:var(--muted)}
-  footer{margin:28px 0 40px;color:var(--muted);font-size:13px}
-  @media(max-width:980px){.grid{grid-template-columns:1fr;}}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f6f7fb;
+  margin: 0;
+  padding: 40px;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h2, h3 {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 15px;
+  border-radius: 8px;
+  border: 1px solid #d7d7d7;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #1a73e8;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+button:hover {
+  opacity: .92;
+}
+
+#logoutBtn {
+  background: #e65151;
+}
+
+/* Notification popup */
+#notifBox {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff;
+  padding: 14px 18px;
+  border-radius: 8px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+  opacity: 0;
+  transition: opacity .3s ease;
+  font-weight: 500;
+  min-width: 200px;
+}
+
+.success { border-left: 4px solid #10b981; }
+.error   { border-left: 4px solid #ef4444; }
+.warning { border-left: 4px solid #f59e0b; }
+
 </style>
 </head>
 <body>
 
-<header>
-  <div class="brand">Bni Yekhlef High School</div>
-  <div class="controls">
-    <select id="langSelect" class="lang"></select>
-    <div id="authControls" style="display:flex;gap:8px;align-items:center">
-      <button id="openLogin" class="btn ghost">Login / Register</button>
-    </div>
-  </div>
-</header>
+<div id="notifBox"></div>
 
 <div class="container">
-  <div class="card grid">
-    <div class="center">
-      <div>
-        <h1 id="title">Welcome</h1>
-        <p class="lead" id="subtitle">School portal — login to chat and participate.</p>
-      </div>
+  <h2>Bni Yekhlef High School</h2>
+  <p id="authStatus"><strong>Status:</strong> Not logged in</p>
 
-      <div id="publicArea" class="card" style="margin-top:12px">
-        <h3 class="small">Public Announcements</h3>
-        <div id="announcements" style="margin-top:10px" class="small">No announcements yet.</div>
-      </div>
+  <hr><br>
 
-      <div class="card" style="margin-top:12px">
-        <h3>Chat (authenticated users)</h3>
-        <div id="chatSection" style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
-          <div id="chatBox" class="chatBox"></div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="messageInput" placeholder="Write a message..." />
-            <button id="sendBtn" class="btn">Send</button>
-          </div>
-        </div>
-      </div>
+  <h3>Register</h3>
+  <input id="regEmail" type="email" placeholder="Email">
+  <input id="regPass" type="password" placeholder="Password">
+  <button id="registerBtn">Create Account</button>
 
-    </div>
+  <br><hr><br>
 
-    <aside>
-      <div class="card">
-        <h3 id="authTitle">Account</h3>
-        <div id="authBox">
-          <input id="email" type="email" placeholder="Email" />
-          <input id="password" type="password" placeholder="Password" />
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button id="loginBtn" class="btn" style="flex:1">Log In</button>
-            <button id="registerBtn" class="btn ghost" style="flex:1">Register</button>
-          </div>
-          <p class="small" style="margin-top:8px">Logged out — register or login to send messages.</p>
-        </div>
+  <h3>Login</h3>
+  <input id="logEmail" type="email" placeholder="Email">
+  <input id="logPass" type="password" placeholder="Password">
+  <button id="loginBtn">Login</button>
 
-        <div id="profileBox" style="display:none;margin-top:12px">
-          <p class="small">Signed in as <strong id="userEmail"></strong></p>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button id="logoutBtn" class="btn ghost" style="flex:1">Logout</button>
-            <button id="clearBtn" class="btn" style="flex:1">Clear messages</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <h3 class="small">Quick Info</h3>
-        <p class="small" id="statusInfo">You are not signed in.</p>
-      </div>
-    </aside>
-  </div>
+  <br><br>
+  <button id="logoutBtn">Logout</button>
 </div>
 
-<div class="notif-wrap" id="notifWrap"></div>
-
-<footer>© Bni Yekhlef High School</footer>
-
-<!-- Firebase modular SDK (CDN) - type=module for Vercel/hosted environments -->
+<!-- Firebase (Modular) -->
 <script type="module">
-  // Firebase imports (modular) - CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // --------------------- your firebase config (you provided) ---------------------
-  const firebaseConfig = {
-    apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
-    authDomain: "bniyekhlef-high-school.firebaseapp.com",
-    projectId: "bniyekhlef-high-school",
-    storageBucket: "bniyekhlef-high-school.firebasestorage.app",
-    messagingSenderId: "807833913334",
-    appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
-    measurementId: "G-QCWNGXXRPP"
-  };
+/* -----------------------------
+   Firebase Imports
+------------------------------*/
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getAuth, createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  // init
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+import { 
+  getFirestore, doc, setDoc 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // ---------- i18n ---------- 
-  const translations = {
-    en: {
-      title: "Welcome to Bni Yekhlef High School",
-      subtitle: "School portal — login to chat and participate.",
-      account: "Account",
-      statusNotSigned: "You are not signed in.",
-      statusSigned: "Signed in as",
-      sendPlaceholder: "Write a message..."
-    },
-    fr: {
-      title: "Bienvenue à Bni Yekhlef High School",
-      subtitle: "Portail scolaire — connectez-vous pour discuter et participer.",
-      account: "Compte",
-      statusNotSigned: "Vous n'êtes pas connecté.",
-      statusSigned: "Connecté en tant que",
-      sendPlaceholder: "Écrivez un message..."
-    },
-    ar: {
-      title: "مرحبا بكم في ثانوية بني يخلّف",
-      subtitle: "بوابة المدرسة — سجّل للدخول والدردشة والمشاركة.",
-      account: "الحساب",
-      statusNotSigned: "أنت غير متصل.",
-      statusSigned: "متصل باسم",
-      sendPlaceholder: "اكتب رسالة..."
-    }
-  };
-  let lang = 'en';
-  const langSelect = document.getElementById('langSelect');
-  Object.keys(translations).forEach(k=>{
-    const o = document.createElement('option'); o.value = k; o.textContent = k.toUpperCase(); langSelect.appendChild(o);
-  });
-  langSelect.value = lang;
-  langSelect.addEventListener('change', (e)=>{ lang = e.target.value; applyI18n(); });
+/* -----------------------------
+   Firebase Config (YOURS)
+------------------------------*/
+const firebaseConfig = {
+  apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
+  authDomain: "bniyekhlef-high-school.firebaseapp.com",
+  projectId: "bniyekhlef-high-school",
+  storageBucket: "bniyekhlef-high-school.firebasestorage.app",
+  messagingSenderId: "807833913334",
+  appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
+  measurementId: "G-QCWNGXXRPP"
+};
 
-  function applyI18n(){
-    const t = translations[lang];
-    document.getElementById('title').textContent = t.title;
-    document.getElementById('subtitle').textContent = t.subtitle;
-    document.getElementById('authTitle')?.setAttribute('aria-label', t.account);
-    document.getElementById('statusInfo').textContent = t.statusNotSigned;
-    document.getElementById('messageInput').placeholder = t.sendPlaceholder;
+/* -----------------------------
+   Initialize Firebase
+------------------------------*/
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* -----------------------------
+   Notification System
+------------------------------*/
+function notify(text, type = "success") {
+  const box = document.getElementById("notifBox");
+  box.textContent = text;
+  box.className = type;
+  box.style.opacity = 1;
+  setTimeout(() => box.style.opacity = 0, 3000);
+}
+
+/* -----------------------------
+   Register User
+------------------------------*/
+async function registerUser() {
+  const email = document.getElementById("regEmail").value;
+  const pass = document.getElementById("regPass").value;
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+
+    await setDoc(doc(db, "users", cred.user.uid), {
+      email: email,
+      createdAt: new Date()
+    });
+
+    notify("Account created successfully!", "success");
+  } 
+  catch (err) {
+    notify(err.message, "error");
   }
-  applyI18n();
+}
 
-  // ---------- notification system ----------
-  const notifWrap = document.getElementById('notifWrap');
-  function notify(text, type='info'){
-    const n = document.createElement('div');
-    n.className = 'notif';
-    n.style.background = (type==='error') ? 'linear-gradient(90deg,#ef4444,#dc2626)' : (type==='success') ? 'linear-gradient(90deg,#10b981,#059669)' : '#111827';
-    n.textContent = text;
-    notifWrap.appendChild(n);
-    // force reflow then show
-    requestAnimationFrame(()=> n.classList.add('show'));
-    setTimeout(()=> {
-      n.style.opacity = 0; 
-      n.style.transform = 'translateX(18px)';
-      setTimeout(()=> n.remove(), 450);
-    }, 3500);
+/* -----------------------------
+   Login User
+------------------------------*/
+async function loginUser() {
+  const email = document.getElementById("logEmail").value;
+  const pass = document.getElementById("logPass").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    notify("Logged in!", "success");
+  } 
+  catch (err) {
+    notify(err.message, "error");
   }
+}
 
-  // ---------- UI refs ----------
-  const emailEl = document.getElementById('email');
-  const passEl = document.getElementById('password');
-  const loginBtn = document.getElementById('loginBtn');
-  const registerBtn = document.getElementById('registerBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const chatBox = document.getElementById('chatBox');
-  const messageInput = document.getElementById('messageInput');
-  const sendBtn = document.getElementById('sendBtn');
-  const profileBox = document.getElementById('profileBox');
-  const authBox = document.getElementById('authBox');
-  const userEmailLabel = document.getElementById('userEmail');
-  const statusInfo = document.getElementById('statusInfo');
-  const clearBtn = document.getElementById('clearBtn');
+/* -----------------------------
+   Logout User
+------------------------------*/
+async function logoutUser() {
+  await signOut(auth);
+  notify("Logged out", "warning");
+}
 
-  // ---------- Auth actions ----------
-  loginBtn.addEventListener('click', async ()=>{
-    const email = emailEl.value.trim();
-    const pass = passEl.value;
-    if(!email || !pass){ notify('Email and password required','error'); return; }
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      notify('Logged in successfully','success');
-    } catch (e) {
-      notify(e.message, 'error');
-    }
-  });
+/* -----------------------------
+   Auth State Listener
+------------------------------*/
+onAuthStateChanged(auth, user => {
+  const status = document.getElementById("authStatus");
 
-  registerBtn.addEventListener('click', async ()=>{
-    const email = emailEl.value.trim();
-    const pass = passEl.value;
-    if(!email || !pass){ notify('Email and password required','error'); return; }
-    try {
-      await createUserWithEmailAndPassword(auth, email, pass);
-      notify('Account created — logged in', 'success');
-    } catch (e) {
-      notify(e.message, 'error');
-    }
-  });
-
-  logoutBtn.addEventListener('click', async ()=>{
-    try {
-      await signOut(auth);
-      notify('Logged out','success');
-    } catch (e) { notify(e.message,'error'); }
-  });
-
-  // ---------- Realtime chat ----------
-  const messagesCollection = collection(db, 'messages');
-  const messagesQuery = query(messagesCollection, orderBy('time'));
-
-  // listen messages
-  let unsubMessages = null;
-  function initMessagesListener(){
-    if(unsubMessages) unsubMessages();
-    unsubMessages = onSnapshot(messagesQuery, snap => {
-      chatBox.innerHTML = '';
-      snap.forEach(doc => {
-        const d = doc.data();
-        const el = document.createElement('div');
-        el.className = 'msg' + ((auth.currentUser && d.uid === auth.currentUser.uid) ? ' me' : '');
-        const who = d.name || 'Anon';
-        const time = d.time && d.time.toDate ? d.time.toDate().toLocaleString() : '';
-        el.innerHTML = `<div style="font-size:13px;color:var(--muted)">${escapeHtml(who)} <span style="font-size:11px;color:#94a3b8"> ${time}</span></div><div style="margin-top:6px">${escapeHtml(d.text)}</div>`;
-        chatBox.appendChild(el);
-      });
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }, err => { console.error(err); notify('Chat load error','error'); });
+  if (user) {
+    status.innerHTML = `<strong>Status:</strong> Logged in as ${user.email}`;
+  } else {
+    status.innerHTML = `<strong>Status:</strong> Not logged in`;
   }
-  initMessagesListener();
+});
 
-  sendBtn.addEventListener('click', async ()=>{
-    const txt = messageInput.value.trim();
-    if(!txt){ return; }
-    const user = auth.currentUser;
-    if(!user){ notify('Sign in to send messages','error'); return; }
-    try {
-      await addDoc(messagesCollection, { text: txt, uid: user.uid, name: user.email, time: serverTimestamp() });
-      messageInput.value = '';
-      notify('Message sent','success');
-    } catch (e) {
-      notify(e.message,'error');
-    }
-  });
-
-  // optional clear messages (for demo) - deletes all messages (careful)
-  clearBtn.addEventListener('click', async ()=>{
-    if(!confirm('Clear all messages?')) return;
-    try {
-      const snap = await getDocs(messagesCollection);
-      for(const d of snap.docs){ await deleteDoc(doc(db,'messages',d.id)); }
-      notify('Messages cleared','success');
-    } catch (e){ notify(e.message,'error'); }
-  });
-
-  // ---------- Auth state listener ----------
-  onAuthStateChanged(auth, user => {
-    if(user){
-      // show profile panel
-      profileBox.style.display = 'block';
-      authBox.style.display = 'none';
-      userEmailLabel.textContent = user.email;
-      statusInfo.textContent = translations[lang].statusSigned + ' ' + user.email;
-      applyI18n();
-      initMessagesListener();
-    } else {
-      profileBox.style.display = 'none';
-      authBox.style.display = 'block';
-      userEmailLabel.textContent = '';
-      statusInfo.textContent = translations[lang].statusNotSigned;
-      applyI18n();
-    }
-  });
-
-  // escape HTML for messages
-  function escapeHtml(s){
-    if(!s) return '';
-    return s.toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-  }
-
-  // small helper to delete doc (used above)
-  import { deleteDoc as _deleteDoc, doc as _doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  // wrap deleteDoc to use _deleteDoc/_doc
-  async function deleteDoc(pathDoc){ return _deleteDoc(_doc(db,pathDoc)); }
-
-  // replace the simple deleteDoc usage above to correct module usage
-  async function deleteDocWrapper(dref){
-    // not used; kept for compatibility
-  }
-
-  // initial i18n run
-  applyI18n();
+/* -----------------------------
+   Hook Buttons
+------------------------------*/
+document.getElementById("registerBtn").onclick = registerUser;
+document.getElementById("loginBtn").onclick = loginUser;
+document.getElementById("logoutBtn").onclick = logoutUser;
 
 </script>
 </body>
