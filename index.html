@@ -1,1886 +1,553 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNIYEKHLEF High School</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Google Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2c3e50;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header Styles */
-        header {
-            background-color: var(--secondary);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            margin-left: 10px;
-        }
-        
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 25px;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-        
-        nav ul li a i {
-            margin-right: 5px;
-        }
-        
-        .auth-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .btn {
-            padding: 8px 20px;
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .btn-login {
-            background-color: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-register {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            color: white;
-        }
-        
-        .user-info span {
-            margin-right: 10px;
-        }
-        
-        .btn-logout {
-            background-color: var(--danger);
-            color: white;
-        }
-        
-        /* Language Selector */
-        .language-selector {
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .language-selector select {
-            background-color: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-family: 'Open Sans', sans-serif;
-        }
-        
-        /* Main Content */
-        main {
-            min-height: calc(100vh - 140px);
-            padding: 40px 0;
-        }
-        
-        .page-title {
-            margin-bottom: 30px;
-            color: var(--secondary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-        
-        .card h3 {
-            color: var(--secondary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .card h3 i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-        
-        /* Announcements */
-        .announcement-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .announcement-item:last-child {
-            border-bottom: none;
-        }
-        
-        .announcement-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--secondary);
-        }
-        
-        .announcement-date {
-            font-size: 0.85rem;
-            color: #777;
-        }
-        
-        /* Events */
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .event-card {
-            background-color: var(--light);
-            border-radius: 8px;
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .event-date {
-            background-color: var(--primary);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-        
-        /* Clubs */
-        .clubs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .club-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
-        }
-        
-        .club-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .club-image {
-            height: 150px;
-            background-color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-        
-        .club-info {
-            padding: 15px;
-        }
-        
-        .club-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--secondary);
-        }
-        
-        /* Login/Register Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 450px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .modal-title {
-            color: var(--secondary);
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #777;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--secondary);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Open Sans', sans-serif;
-            transition: border 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-        }
-        
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .form-footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .error-message {
-            color: var(--danger);
-            font-size: 0.9rem;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-        }
-        
-        .admin-header {
-            background-color: var(--dark);
-            color: white;
-            padding: 15px 0;
-        }
-        
-        .admin-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .admin-nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        .admin-nav ul li {
-            margin-left: 20px;
-        }
-        
-        .admin-nav ul li a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        .admin-nav ul li a i {
-            margin-right: 5px;
-        }
-        
-        .admin-content {
-            padding: 30px 0;
-        }
-        
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            color: #777;
-            font-size: 0.9rem;
-        }
-        
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .admin-table th, .admin-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .admin-table th {
-            background-color: var(--light);
-            color: var(--secondary);
-            font-weight: 600;
-        }
-        
-        .admin-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .btn-action {
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-        
-        .btn-edit {
-            background-color: var(--warning);
-            color: white;
-            border: none;
-        }
-        
-        .btn-delete {
-            background-color: var(--danger);
-            color: white;
-            border: none;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--secondary);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
-        .copyright {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #bbb;
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #777;
-        }
-        
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            color: #ddd;
-        }
-        
-        /* Page-specific styles */
-        .page {
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        .admin-page {
-            display: none;
-        }
-        
-        .admin-page.active {
-            display: block;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            nav ul {
-                margin-top: 15px;
-                flex-wrap: wrap;
-            }
-            
-            nav ul li {
-                margin: 5px 15px 5px 0;
-            }
-            
-            .auth-buttons {
-                margin-top: 15px;
-            }
-            
-            .language-selector {
-                margin-left: 0;
-                margin-top: 15px;
-            }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bni Yekhlef High School — Portal (SPA)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f4f7fb; --card:#ffffff; --muted:#6b7280; --accent:#0a67d1; --success:#10b981; --danger:#ef4444;
+  --radius:12px; --shadow:0 8px 30px rgba(2,6,23,0.06);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);min-height:100vh;color:#0f172a}
+.app{max-width:1100px;margin:28px auto;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.brand{font-weight:700;font-size:20px}
+.controls{display:flex;gap:8px;align-items:center}
+.lang{padding:8px;border-radius:8px;border:1px solid #e6eef7;background:white}
+.btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;border:1px solid rgba(10,103,209,0.12);color:var(--accent)}
+.layout{display:grid;grid-template-columns:240px 1fr;gap:16px}
+.sidebar{background:var(--card);padding:14px;border-radius:var(--radius);box-shadow:var(--shadow);height:calc(100vh - 120px);position:sticky;top:60px}
+.nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.nav button{background:transparent;border:0;text-align:left;padding:10px;border-radius:8px;cursor:pointer;font-weight:600}
+.nav button.active{background:linear-gradient(90deg, rgba(10,103,209,0.08), rgba(10,103,209,0.03));border-left:4px solid var(--accent);padding-left:8px}
+.view{background:var(--card);padding:16px;border-radius:12px;box-shadow:var(--shadow);min-height:420px}
+.hidden{display:none}
+.small{font-size:13px;color:var(--muted)}
+.form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.input{padding:10px;border-radius:8px;border:1px solid #e6eef7;background:white}
+.chat-window{height:300px;overflow:auto;padding:10px;border-radius:8px;border:1px solid #eef2f7;background:#fbfdff}
+.card{background:var(--card);padding:12px;border-radius:10px;border:1px solid #eef2f7}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;z-index:9999}
+.modal .modal-inner{background:white;padding:16px;border-radius:10px;width:100%;max-width:520px;box-shadow:var(--shadow)}
+.notif-wrap{position:fixed;top:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:10000}
+.notif{padding:10px 14px;border-radius:8px;background:white;box-shadow:var(--shadow);min-width:220px;opacity:0;transform:translateX(10px);transition:all .25s}
+.notif.show{opacity:1;transform:translateX(0)}
+.notif.success{border-left:4px solid var(--success)}
+.notif.error{border-left:4px solid var(--danger)}
+.notif.warn{border-left:4px solid #f59e0b}
+.footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;height:auto}}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <i class="material-icons logo-icon">school</i>
-                <h1>BNIYEKHLEF High School</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" data-page="homepage"><i class="material-icons">home</i> Homepage</a></li>
-                    <li><a href="#" class="nav-link" data-page="announcements"><i class="material-icons">campaign</i> Announcements</a></li>
-                    <li><a href="#" class="nav-link" data-page="events"><i class="material-icons">event</i> Events</a></li>
-                    <li><a href="#" class="nav-link" data-page="clubs"><i class="material-icons">groups</i> Clubs</a></li>
-                    <li><a href="#" class="nav-link" data-page="account"><i class="material-icons">person</i> Account info</a></li>
-                    <li><a href="#" class="nav-link" data-page="settings"><i class="material-icons">settings</i> Settings</a></li>
-                    <li id="admin-nav-item" style="display: none;"><a href="#" class="nav-link" data-page="admin"><i class="material-icons">admin_panel_settings</i> Admin Panel</a></li>
-                </ul>
-            </nav>
-            <div class="auth-buttons" id="auth-buttons">
-                <button class="btn btn-login" id="login-btn">Login</button>
-                <button class="btn btn-register" id="register-btn">Register</button>
-            </div>
-            <div class="user-info" id="user-info" style="display: none;">
-                <span id="user-name"></span>
-                <button class="btn btn-logout" id="logout-btn">Logout</button>
-            </div>
-            <div class="language-selector">
-                <select id="language-select">
-                    <option value="en">English</option>
-                    <option value="ar">Arabic</option>
-                    <option value="fr">French</option>
-                </select>
-            </div>
+<div class="app">
+  <header class="header">
+    <div class="brand">Bni Yekhlef High School</div>
+    <div class="controls">
+      <select id="lang" class="lang">
+        <option value="en">EN</option><option value="fr">FR</option><option value="ar">AR</option>
+      </select>
+      <div id="authControls" style="display:flex;gap:8px;align-items:center">
+        <button id="btnOpenAuth" class="btn ghost">Login / Register</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="card">
+        <div id="sideUser" class="small">Not signed in</div>
+        <div id="sideEmail" style="font-weight:600;margin-top:8px"></div>
+      </div>
+
+      <nav class="nav" style="margin-top:12px">
+        <button data-view="dashboard" class="active">Dashboard</button>
+        <button data-view="events">Events</button>
+        <button data-view="clubs">Clubs</button>
+        <button data-view="profile">Profile</button>
+        <button data-view="admin" id="navAdmin" class="hidden">Admin Panel</button>
+      </nav>
+
+      <div style="margin-top:12px">
+        <button id="btnLogout" class="btn ghost hidden">Logout</button>
+      </div>
+      <div style="margin-top:12px" class="small">Admin login: <strong>admin@school.com</strong> / <strong>admin123</strong></div>
+    </aside>
+
+    <main>
+      <!-- dashboard view -->
+      <section id="dashboard" class="view">
+        <h3>Dashboard</h3>
+        <p class="small">Your dashboard — content unlocked after login.</p>
+        <div id="dashContent" style="margin-top:12px"></div>
+      </section>
+
+      <!-- events -->
+      <section id="events" class="view hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Events</h3>
+          <div>
+            <button id="btnAddEvent" class="btn hidden">Create Event</button>
+          </div>
         </div>
-    </header>
+        <div id="eventsList" style="margin-top:12px"></div>
+      </section>
 
-    <!-- Main Content - Regular Pages -->
-    <main id="main-content">
-        <!-- Homepage -->
-        <section id="homepage" class="page active">
-            <div class="container">
-                <h2 class="page-title">Welcome to BNIYEKHLEF High School</h2>
-                <div class="card">
-                    <h3><i class="material-icons">info</i> About Our School</h3>
-                    <p>BNIYEKHLEF High School is committed to providing high-quality education that prepares students for success in a rapidly changing world. Our dedicated faculty and comprehensive curriculum ensure that every student reaches their full potential.</p>
-                </div>
-                <div class="card">
-                    <h3><i class="material-icons">star</i> Featured Announcements</h3>
-                    <div id="featured-announcements">
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Check back later for school announcements.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3><i class="material-icons">event</i> Upcoming Events</h3>
-                    <div id="featured-events">
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Scheduled</h3>
-                            <p>Check back later for upcoming events.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <!-- clubs -->
+      <section id="clubs" class="view hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Clubs</h3>
+          <div>
+            <button id="btnAddClub" class="btn hidden">Create Club</button>
+          </div>
+        </div>
+        <div id="clubsList" style="margin-top:12px"></div>
+      </section>
 
-        <!-- Announcements Page -->
-        <section id="announcements" class="page">
-            <div class="container">
-                <h2 class="page-title">Announcements</h2>
-                <div class="card">
-                    <div id="all-announcements">
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Check back later for school announcements.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <!-- profile -->
+      <section id="profile" class="view hidden">
+        <h3>Profile</h3>
+        <div class="card">
+          <div id="profileInfo" class="small">Load profile after sign in.</div>
+        </div>
+      </section>
 
-        <!-- Events Page -->
-        <section id="events" class="page">
-            <div class="container">
-                <h2 class="page-title">Events</h2>
-                <div class="card">
-                    <div id="all-events">
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Scheduled</h3>
-                            <p>Check back later for upcoming events.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Clubs Page -->
-        <section id="clubs" class="page">
-            <div class="container">
-                <h2 class="page-title">Clubs</h2>
-                <div class="card">
-                    <div id="all-clubs">
-                        <div class="empty-state">
-                            <i class="material-icons">groups</i>
-                            <h3>No Clubs Available</h3>
-                            <p>Check back later for school clubs information.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Account Info Page -->
-        <section id="account" class="page">
-            <div class="container">
-                <h2 class="page-title">Account Information</h2>
-                <div class="card">
-                    <h3><i class="material-icons">person</i> Personal Information</h3>
-                    <div class="form-group">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" class="form-control" value="Not available" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" value="Not available" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" class="form-control" value="Not available" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea id="address" class="form-control" readonly>Not available</textarea>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3><i class="material-icons">school</i> Academic Information</h3>
-                    <div class="form-group">
-                        <label for="grade">Grade/Class</label>
-                        <input type="text" id="grade" class="form-control" value="Not available" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="student-id">Student ID</label>
-                        <input type="text" id="student-id" class="form-control" value="Not available" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="advisor">Academic Advisor</label>
-                        <input type="text" id="advisor" class="form-control" value="Not available" readonly>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Settings Page -->
-        <section id="settings" class="page">
-            <div class="container">
-                <h2 class="page-title">Settings</h2>
-                <div class="card">
-                    <h3><i class="material-icons">notifications</i> Notification Preferences</h3>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" checked> Email notifications
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" checked> SMS notifications
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox"> Push notifications
-                        </label>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3><i class="material-icons">security</i> Privacy & Security</h3>
-                    <div class="form-group">
-                        <label for="current-password">Current Password</label>
-                        <input type="password" id="current-password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="new-password">New Password</label>
-                        <input type="password" id="new-password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm New Password</label>
-                        <input type="password" id="confirm-password" class="form-control">
-                    </div>
-                    <button class="btn btn-primary">Update Password</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Admin Panel Page -->
-        <section id="admin" class="page">
-            <div class="container">
-                <h2 class="page-title">Admin Panel</h2>
-                <div class="admin-stats">
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-announcements">0</div>
-                        <div class="stat-label">Total Announcements</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-events">0</div>
-                        <div class="stat-label">Total Events</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-clubs">0</div>
-                        <div class="stat-label">Active Clubs</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="total-users">0</div>
-                        <div class="stat-label">Total Users</div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3><i class="material-icons">campaign</i> Announcements Management</h3>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <p>Create and manage school announcements</p>
-                        <button class="btn btn-register" id="add-announcement-btn">Add Announcement</button>
-                    </div>
-                    <div id="admin-announcements-list">
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Add your first announcement to get started.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3><i class="material-icons">event</i> Events Management</h3>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <p>Create and manage school events</p>
-                        <button class="btn btn-register" id="add-event-btn">Add Event</button>
-                    </div>
-                    <div id="admin-events-list">
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Yet</h3>
-                            <p>Add your first event to get started.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3><i class="material-icons">groups</i> Clubs Management</h3>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <p>Create and manage school clubs</p>
-                        <button class="btn btn-register" id="add-club-btn">Add Club</button>
-                    </div>
-                    <div id="admin-clubs-list">
-                        <div class="empty-state">
-                            <i class="material-icons">groups</i>
-                            <h3>No Clubs Yet</h3>
-                            <p>Add your first club to get started.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <!-- admin -->
+      <section id="admin" class="view hidden">
+        <h3>Admin Panel</h3>
+        <div class="card" style="margin-top:12px">
+          <h4>Manage</h4>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="btnManageEvents" class="btn">Manage Events</button>
+            <button id="btnManageClubs" class="btn">Manage Clubs</button>
+          </div>
+          <div id="adminArea" style="margin-top:12px"></div>
+        </div>
+      </section>
     </main>
+  </div>
 
-    <!-- Login Modal -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Login to Your Account</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" class="form-control" required>
-                    <div class="error-message" id="login-email-error"></div>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" class="form-control" required>
-                    <div class="error-message" id="login-password-error"></div>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-            <div class="form-footer">
-                <p>Don't have an account? <a href="#" id="switch-to-register">Register here</a></p>
-            </div>
-        </div>
+  <div class="footer">© Bni Yekhlef High School</div>
+</div>
+
+<!-- auth modal -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-inner">
+    <h3 id="authTitle">Sign in / Register</h3>
+    <div class="form-row">
+      <input id="modalEmail" class="input" placeholder="Email" />
+      <input id="modalPass" class="input" type="password" placeholder="Password" />
     </div>
-
-    <!-- Register Modal -->
-    <div class="modal" id="register-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Create an Account</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-name">Full Name</label>
-                    <input type="text" id="register-name" class="form-control" required>
-                    <div class="error-message" id="register-name-error"></div>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Email Address</label>
-                    <input type="email" id="register-email" class="form-control" required>
-                    <div class="error-message" id="register-email-error"></div>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" class="form-control" required>
-                    <div class="error-message" id="register-password-error"></div>
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm-password">Confirm Password</label>
-                    <input type="password" id="register-confirm-password" class="form-control" required>
-                    <div class="error-message" id="register-confirm-password-error"></div>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
-            <div class="form-footer">
-                <p>Already have an account? <a href="#" id="switch-to-login">Login here</a></p>
-            </div>
-        </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="modalRegister" class="btn ghost" data-original-text="Register">Register</button>
+      <button id="modalLogin" class="btn" data-original-text="Login">Login</button>
     </div>
+    <p class="small" style="margin-top:10px">Tip: Admin credentials above will be treated as admin for demo. For production add admin UID(s) in Firestore collection <code>admins/{uid}</code>.</p>
+  </div>
+</div>
 
-    <!-- Add Announcement Modal -->
-    <div class="modal" id="add-announcement-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Announcement</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <form id="add-announcement-form">
-                <div class="form-group">
-                    <label for="announcement-title">Title</label>
-                    <input type="text" id="announcement-title" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="announcement-content">Content</label>
-                    <textarea id="announcement-content" class="form-control" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Announcement</button>
-            </form>
-        </div>
+<!-- create event modal -->
+<div id="eventModal" class="modal hidden">
+  <div class="modal-inner">
+    <h3>Create Event</h3>
+    <div class="form-row">
+      <input id="evTitle" class="input" placeholder="Title" />
+      <input id="evDate" class="input" type="date" />
+      <input id="evPlace" class="input" placeholder="Place (optional)" />
+      <textarea id="evDesc" class="input" placeholder="Description"></textarea>
     </div>
-
-    <!-- Add Event Modal -->
-    <div class="modal" id="add-event-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Event</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <form id="add-event-form">
-                <div class="form-group">
-                    <label for="event-title">Event Title</label>
-                    <input type="text" id="event-title" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-date">Event Date</label>
-                    <input type="date" id="event-date" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-time">Event Time</label>
-                    <input type="time" id="event-time" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-location">Location</label>
-                    <input type="text" id="event-location" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-description">Description</label>
-                    <textarea id="event-description" class="form-control" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Event</button>
-            </form>
-        </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="evCancel" class="btn ghost">Cancel</button>
+      <button id="evSave" class="btn">Create</button>
     </div>
+  </div>
+</div>
 
-    <!-- Add Club Modal -->
-    <div class="modal" id="add-club-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Club</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <form id="add-club-form">
-                <div class="form-group">
-                    <label for="club-name">Club Name</label>
-                    <input type="text" id="club-name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="club-description">Description</label>
-                    <textarea id="club-description" class="form-control" rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="club-meeting-day">Meeting Day</label>
-                    <select id="club-meeting-day" class="form-control" required>
-                        <option value="">Select a day</option>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="club-meeting-time">Meeting Time</label>
-                    <input type="time" id="club-meeting-time" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="club-advisor">Club Advisor</label>
-                    <input type="text" id="club-advisor" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Club</button>
-            </form>
-        </div>
+<!-- create club modal -->
+<div id="clubModal" class="modal hidden">
+  <div class="modal-inner">
+    <h3>Create Club</h3>
+    <div class="form-row">
+      <input id="clubName" class="input" placeholder="Club name" />
+      <input id="clubSubject" class="input" placeholder="Subject" />
+      <textarea id="clubDesc" class="input" placeholder="Description"></textarea>
     </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="clubCancel" class="btn ghost">Cancel</button>
+      <button id="clubSave" class="btn">Create Club</button>
+    </div>
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="logo">
-                <i class="material-icons logo-icon">school</i>
-                <h1>BNIYEKHLEF High School</h1>
-            </div>
-            <div class="footer-links">
-                <a href="#" data-page="homepage">Homepage</a>
-                <a href="#" data-page="announcements">Announcements</a>
-                <a href="#" data-page="events">Events</a>
-                <a href="#" data-page="clubs">Clubs</a>
-                <a href="#" data-page="account">Account info</a>
-                <a href="#" data-page="settings">Settings</a>
-            </div>
-            <div class="copyright">
-                &copy; 2023 BNIYEKHLEF High School. All rights reserved.
-            </div>
-        </div>
-    </footer>
+<!-- notifications -->
+<div class="notif-wrap" id="notifWrap"></div>
 
-    <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
-            authDomain: "bniyekhlef-high-school.firebaseapp.com",
-            projectId: "bniyekhlef-high-school",
-            storageBucket: "bniyekhlef-high-school.firebasestorage.app",
-            messagingSenderId: "807833913334",
-            appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
-            measurementId: "G-QCWNGXXRPP"
-        };
+<!-- Firebase modular SDK (CDN) -->
+<script type="module">
+/* =========================
+   Firebase modular imports
+   ========================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  getDoc,
+  getDocs,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Global variables
-        let currentUser = null
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-        });
+/* ----------------------------
+   Firebase config (your project)
+   ---------------------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
+  authDomain: "bniyekhlef-high-school.firebaseapp.com",
+  projectId: "bniyekhlef-high-school",
+  storageBucket: "bniyekhlef-high-school.firebasestorage.app",
+  messagingSenderId: "807833913334",
+  appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
+  measurementId: "G-QCWNGXXRPP"
+};
 
-        async function initializeApp() {
-            // Load content for all users
-            loadPublicContent();
-            
-            // Set up event listeners
-            setupEventListeners();
-        }
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-        // Load public content (announcements, events, clubs)
-        async function loadPublicContent() {
-            await loadAnnouncements();
-            await loadEvents();
-            await loadClubs();
-        }
+/* ----------------------------
+   Helpers: UI + Notifications
+   ---------------------------- */
+function showNotif(text, kind = 'success') {
+  const wrap = document.getElementById('notifWrap');
+  const n = document.createElement('div');
+  n.className = 'notif ' + (kind==='warn'?'warn':(kind==='error'?'error':'success'));
+  n.textContent = text;
+  wrap.appendChild(n);
+  requestAnimationFrame(()=> n.classList.add('show'));
+  setTimeout(()=> { n.classList.remove('show'); setTimeout(()=> n.remove(),300); }, 3500);
+}
 
-        // Load announcements for public view
-        async function loadAnnouncements() {
-            try {
-                const snapshot = await db.collection('announcements')
-                    .orderBy('createdAt', 'desc')
-                    .get();
-                
-                const announcementsContainer = document.getElementById('all-announcements');
-                const featuredContainer = document.getElementById('featured-announcements');
-                
-                if (snapshot.empty) {
-                    // Show empty state
-                    announcementsContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Check back later for school announcements.</p>
-                        </div>
-                    `;
-                    featuredContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Check back later for school announcements.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Clear containers
-                announcementsContainer.innerHTML = '';
-                featuredContainer.innerHTML = '';
-                
-                // Add announcements
-                snapshot.forEach((doc, index) => {
-                    const announcement = doc.data();
-                    const announcementElement = createAnnouncementElement(announcement);
-                    
-                    announcementsContainer.appendChild(announcementElement);
-                    
-                    // Add to featured (first 2 announcements)
-                    if (index < 2) {
-                        const featuredElement = createAnnouncementElement(announcement);
-                        featuredContainer.appendChild(featuredElement);
-                    }
-                });
-            } catch (error) {
-                console.error('Error loading announcements:', error);
-            }
-        }
+/* view switching */
+const navButtons = document.querySelectorAll('.nav button');
+navButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=> {
+    navButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const view = btn.dataset.view;
+    document.querySelectorAll('main section.view').forEach(s=> s.classList.add('hidden'));
+    document.getElementById(view).classList.remove('hidden');
+  });
+});
 
-        // Create announcement HTML element
-        function createAnnouncementElement(announcement) {
-            const announcementDate = announcement.createdAt ? 
-                announcement.createdAt.toDate().toLocaleDateString() : 'Recent';
-            
-            const element = document.createElement('div');
-            element.className = 'announcement-item';
-            element.innerHTML = `
-                <div class="announcement-title">${announcement.title}</div>
-                <div class="announcement-date">Posted on: ${announcementDate}</div>
-                <p>${announcement.content}</p>
-            `;
-            
-            return element;
-        }
+/* modal helpers */
+function openModal(id){ document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
 
-        // Load events for public view
-        async function loadEvents() {
-            try {
-                const snapshot = await db.collection('events')
-                    .orderBy('date', 'asc')
-                    .get();
-                
-                const eventsContainer = document.getElementById('all-events');
-                const featuredContainer = document.getElementById('featured-events');
-                
-                if (snapshot.empty) {
-                    // Show empty state
-                    eventsContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Scheduled</h3>
-                            <p>Check back later for upcoming events.</p>
-                        </div>
-                    `;
-                    featuredContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Scheduled</h3>
-                            <p>Check back later for upcoming events.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Clear containers
-                eventsContainer.innerHTML = '';
-                featuredContainer.innerHTML = '';
-                
-                // Add events
-                snapshot.forEach((doc, index) => {
-                    const event = doc.data();
-                    const eventElement = createEventElement(event);
-                    
-                    eventsContainer.appendChild(eventElement);
-                    
-                    // Add to featured (first 2 events)
-                    if (index < 2) {
-                        const featuredElement = createEventElement(event);
-                        featuredContainer.appendChild(featuredElement);
-                    }
-                });
-            } catch (error) {
-                console.error('Error loading events:', error);
-            }
-        }
+/* auth modal wiring */
+const authModal = document.getElementById('authModal');
+document.getElementById('btnOpenAuth').addEventListener('click', ()=> openModal('authModal'));
+authModal.addEventListener('click', e=> { if(e.target===authModal) closeModal('authModal'); });
 
-        // Create event HTML element
-        function createEventElement(event) {
-            const eventDate = event.date ? 
-                new Date(event.date).toLocaleDateString() : 'Date TBD';
-            
-            const element = document.createElement('div');
-            element.className = 'event-card';
-            element.innerHTML = `
-                <div class="event-date">${eventDate}</div>
-                <h4>${event.title}</h4>
-                <p>${event.description}</p>
-                <p><strong>Time:</strong> ${event.time}</p>
-                <p><strong>Location:</strong> ${event.location}</p>
-            `;
-            
-            return element;
-        }
+/* event modal */
+document.getElementById('btnAddEvent').addEventListener('click', ()=> openModal('eventModal'));
+document.getElementById('evCancel').addEventListener('click', ()=> closeModal('eventModal'));
+document.getElementById('evSave').addEventListener('click', onCreateEvent);
 
-        // Load clubs for public view
-        async function loadClubs() {
-            try {
-                const snapshot = await db.collection('clubs').get();
-                
-                const clubsContainer = document.getElementById('all-clubs');
-                
-                if (snapshot.empty) {
-                    // Show empty state
-                    clubsContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">groups</i>
-                            <h3>No Clubs Available</h3>
-                            <p>Check back later for school clubs information.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Clear container
-                clubsContainer.innerHTML = '';
-                
-                // Add clubs
-                snapshot.forEach(doc => {
-                    const club = doc.data();
-                    const clubElement = createClubElement(club);
-                    clubsContainer.appendChild(clubElement);
-                });
-            } catch (error) {
-                console.error('Error loading clubs:', error);
-            }
-        }
+/* club modal */
+document.getElementById('btnAddClub').addEventListener('click', ()=> openModal('clubModal'));
+document.getElementById('clubCancel').addEventListener('click', ()=> closeModal('clubModal'));
+document.getElementById('clubSave').addEventListener('click', onCreateClub);
 
-        // Create club HTML element
-        function createClubElement(club) {
-            const element = document.createElement('div');
-            element.className = 'club-card';
-            element.innerHTML = `
-                <div class="club-image">
-                    <i class="material-icons">groups</i>
-                </div>
-                <div class="club-info">
-                    <div class="club-name">${club.name}</div>
-                    <p>${club.description}</p>
-                    <p><strong>Meeting:</strong> ${club.meetingDay}s, ${club.meetingTime}</p>
-                    <p><strong>Advisor:</strong> ${club.advisor}</p>
-                </div>
-            `;
-            
-            return element;
-        }
+/* auth modal buttons */
+document.getElementById('modalRegister').addEventListener('click', onRegister);
+document.getElementById('modalLogin').addEventListener('click', onLogin);
 
-        // Set up all event listeners
-        function setupEventListeners() {
-            setupNavigation();
-            setupAuthEventListeners();
-            setupAdminEventListeners();
-            setupModalEventListeners();
-        }
+/* logout button */
+document.getElementById('btnLogout').addEventListener('click', async ()=>{
+  try{ await signOut(auth); showNotif('Logged out','success'); }
+  catch(e){ showNotif(e.message,'error'); }
+});
 
-        // Set up navigation event listeners
-        function setupNavigation() {
-            // Regular page navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // Hide all page content
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active');
-                    });
-                    
-                    // Show selected page content
-                    const pageId = this.getAttribute('data-page');
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Load admin content if needed
-                    if (pageId === 'admin') {
-                        loadAdminContent();
-                    }
-                });
-            });
+/* ----------------------------
+   Admin logic helpers
+   ---------------------------- */
+let currentUser = null;
+let isAdmin = false;
+const ADMIN_EMAIL = 'admin@school.com';        // provided credential
+const ADMIN_PASSWORD = 'admin123';            // provided credential
 
-            // Footer navigation
-            document.querySelectorAll('.footer-links a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('data-page');
-                    
-                    // Update nav links
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
-                    
-                    // Show page
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active');
-                    });
-                    document.getElementById(pageId).classList.add('active');
-                });
-            });
-        }
+async function checkAdminRole(uid, email) {
+  // 1) If email matches the admin email (quick demo), treat as admin
+  if (email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return true;
 
-        // Set up authentication event listeners
-        function setupAuthEventListeners() {
-            const loginBtn = document.getElementById('login-btn');
-            const registerBtn = document.getElementById('register-btn');
-            const loginModal = document.getElementById('login-modal');
-            const registerModal = document.getElementById('register-modal');
-            const closeModalButtons = document.querySelectorAll('.close-modal');
-            const switchToRegister = document.getElementById('switch-to-register');
-            const switchToLogin = document.getElementById('switch-to-login');
-            const logoutBtn = document.getElementById('logout-btn');
+  // 2) Otherwise, check Firestore admins/{uid}
+  try {
+    const adm = await getDoc(doc(db,'admins',uid));
+    return adm.exists();
+  } catch(e) {
+    console.error('admin check', e);
+    return false;
+  }
+}
 
-            // Show login modal
-            loginBtn.addEventListener('click', () => {
-                loginModal.style.display = 'flex';
-            });
+/* ----------------------------
+   Register / Login / Auth
+   ---------------------------- */
+async function onRegister(){
+  const email = document.getElementById('modalEmail').value.trim();
+  const pass = document.getElementById('modalPass').value;
+  if(!email || !pass){ showNotif('Email + password required','error'); return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    // create minimal profile doc
+    await setDoc(doc(db,'users',cred.user.uid), { email: email, createdAt: serverTimestamp() }, { merge: true });
+    showNotif('Registered & signed in','success');
+    closeModal('authModal');
+  } catch(e){
+    showNotif(e.message,'error');
+  }
+}
 
-            // Show register modal
-            registerBtn.addEventListener('click', () => {
-                registerModal.style.display = 'flex';
-            });
+async function onLogin(){
+  const email = document.getElementById('modalEmail').value.trim();
+  const pass = document.getElementById('modalPass').value;
+  if(!email || !pass){ showNotif('Email + password required','error'); return; }
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    closeModal('authModal');
+    showNotif('Logged in','success');
+  } catch(e){
+    showNotif(e.message,'error');
+  }
+}
 
-            // Close modals
-            closeModalButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                    clearErrorMessages();
-                });
-            });
+/* ----------------------------
+   Firestore listeners (events & clubs)
+   ---------------------------- */
+const eventsCol = collection(db,'events');
+const qEvents = query(eventsCol, orderBy('createdAt','desc'));
 
-            // Switch between login and register modals
-            switchToRegister.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginModal.style.display = 'none';
-                registerModal.style.display = 'flex';
-                clearErrorMessages();
-            });
+onSnapshot(qEvents, snap=>{
+  const list = document.getElementById('eventsList');
+  list.innerHTML = '';
+  if(snap.empty){ list.innerHTML = '<div class="card small">No events yet.</div>'; return; }
+  snap.forEach(d=>{
+    const ev = d.data();
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.style.marginBottom = '10px';
+    el.innerHTML = `<div style="display:flex;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-weight:700">${escapeHtml(ev.title||'Untitled')}</div>
+        <div class="small">${escapeHtml(ev.description||'')}</div>
+        <div class="small" style="margin-top:6px;color:var(--muted)">${ev.date||''} ${ev.place? ' • ' + escapeHtml(ev.place):''}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">${ev.creatorEmail||''}</div>
+        ${isAdmin ? `<button style="margin-top:8px" class="btn ghost" onclick="deleteEvent('${d.id}')">Delete</button>` : ''}
+      </div>
+    </div>`;
+    list.appendChild(el);
+  });
+});
 
-            switchToLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                registerModal.style.display = 'none';
-                loginModal.style.display = 'flex';
-                clearErrorMessages();
-            });
+const clubsCol = collection(db,'clubs');
+const qClubs = query(clubsCol, orderBy('createdAt','desc'));
 
-            // Close modal when clicking outside
-            window.addEventListener('click', (e) => {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
-                        clearErrorMessages();
-                    }
-                });
-            });
+onSnapshot(qClubs, snap=>{
+  const list = document.getElementById('clubsList');
+  list.innerHTML = '';
+  if(snap.empty){ list.innerHTML = '<div class="card small">No clubs yet.</div>'; return; }
+  snap.forEach(d=>{
+    const c = d.data();
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.style.marginBottom = '10px';
+    el.innerHTML = `<div style="display:flex;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-weight:700">${escapeHtml(c.name||'Untitled')}</div>
+        <div class="small">${escapeHtml(c.description||'')}</div>
+        <div class="small" style="margin-top:6px;color:var(--muted)">Subject: ${escapeHtml(c.subject||'')}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">${c.creatorEmail||''}</div>
+        ${isAdmin ? `<button style="margin-top:8px" class="btn ghost" onclick="deleteClub('${d.id}')">Delete</button>` : ''}
+      </div>
+    </div>`;
+    list.appendChild(el);
+  });
+});
 
-            // Login form submission
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                clearErrorMessages();
-                
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                
-                try {
-                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                    currentUser = userCredential.user;
-                    
-                    // Get user role from Firestore
-                    const userDoc = await db.collection('users').doc(currentUser.uid).get();
-                    if (userDoc.exists) {
-                        userRole = userDoc.data().role;
-                        document.getElementById('user-name').textContent = userDoc.data().name;
-                        
-                        // Update UI based on role
-                        updateUIForUser();
-                        
-                        // Close modal
-                        loginModal.style.display = 'none';
-                        
-                        // Show success message
-                        alert('Login successful!');
-                    } else {
-                        showError('login-email-error', 'User data not found. Please contact administrator.');
-                        await auth.signOut();
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    showError('login-email-error', error.message);
-                }
-            });
+/* ----------------------------
+   Create Event / Club (admin only)
+   ---------------------------- */
+async function onCreateEvent(){
+  if(!currentUser){ showNotif('Sign in to create events','error'); return; }
+  if(!isAdmin){ showNotif('Only admins can create events','error'); return; }
+  const title = document.getElementById('evTitle').value.trim();
+  const date = document.getElementById('evDate').value;
+  const place = document.getElementById('evPlace').value.trim();
+  const description = document.getElementById('evDesc').value.trim();
+  if(!title || !description){ showNotif('Title and description required','error'); return; }
+  try {
+    await addDoc(eventsCol, {
+      title, date, place, description,
+      creatorUid: currentUser.uid, creatorEmail: currentUser.email,
+      createdAt: serverTimestamp()
+    });
+    showNotif('Event created','success');
+    closeModal('eventModal');
+    // clear
+    document.getElementById('evTitle').value=''; document.getElementById('evDate').value=''; document.getElementById('evPlace').value=''; document.getElementById('evDesc').value='';
+  } catch(e){ showNotif(e.message,'error'); }
+}
 
-            // Register form submission
-            document.getElementById('register-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                clearErrorMessages();
-                
-                const name = document.getElementById('register-name').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-                const confirmPassword = document.getElementById('register-confirm-password').value;
-                
-                if (password !== confirmPassword) {
-                    showError('register-confirm-password-error', 'Passwords do not match!');
-                    return;
-                }
-                
-                if (password.length < 6) {
-                    showError('register-password-error', 'Password must be at least 6 characters!');
-                    return;
-                }
-                
-                try {
-                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                    currentUser = userCredential.user;
-                    
-                    // Create user document in Firestore with default role 'student'
-                    await db.collection('users').doc(currentUser.uid).set({
-                        name: name,
-                        email: email,
-                        role: 'student',
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
-                    userRole = 'student';
-                    document.getElementById('user-name').textContent = name;
-                    
-                    // Update UI based on role
-                    updateUIForUser();
-                    
-                    // Close modal
-                    registerModal.style.display = 'none';
-                    
-                    // Show success message
-                    alert('Registration successful!');
-                } catch (error) {
-                    console.error('Registration error:', error);
-                    showError('register-email-error', error.message);
-                }
-            });
+async function onCreateClub(){
+  if(!currentUser){ showNotif('Sign in to create clubs','error'); return; }
+  if(!isAdmin){ showNotif('Only admins can create clubs','error'); return; }
+  const name = document.getElementById('clubName').value.trim();
+  const subject = document.getElementById('clubSubject').value.trim();
+  const description = document.getElementById('clubDesc').value.trim();
+  if(!name || !subject || !description){ showNotif('All fields required','error'); return; }
+  try {
+    await addDoc(clubsCol, {
+      name, subject, description,
+      creatorUid: currentUser.uid, creatorEmail: currentUser.email,
+      createdAt: serverTimestamp()
+    });
+    showNotif('Club created','success');
+    closeModal('clubModal');
+    document.getElementById('clubName').value=''; document.getElementById('clubSubject').value=''; document.getElementById('clubDesc').value='';
+  } catch(e){ showNotif(e.message,'error'); }
+}
 
-            // Logout functionality
-            function logout() {
-                auth.signOut().then(() => {
-                    currentUser = null;
-                    userRole = null;
-                    
-                    // Reset UI
-                    document.getElementById('auth-buttons').style.display = 'flex';
-                    document.getElementById('user-info').style.display = 'none';
-                    document.getElementById('admin-nav-item').style.display = 'none';
-                    
-                    // Show login modal
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                    
-                    // Go to homepage
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    document.querySelector('.nav-link[data-page="homepage"]').classList.add('active');
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active');
-                    });
-                    document.getElementById('homepage').classList.add('active');
-                    
-                    alert('You have been logged out.');
-                }).catch((error) => {
-                    console.error('Logout error:', error);
-                });
-            }
+/* delete helpers - admin only */
+window.deleteEvent = async (id) => {
+  if(!isAdmin){ showNotif('Admin only','error'); return; }
+  if(!confirm('Delete event?')) return;
+  try { await deleteDoc(doc(db,'events',id)); showNotif('Deleted','success'); }
+  catch(e){ showNotif(e.message,'error'); }
+};
+window.deleteClub = async (id) => {
+  if(!isAdmin){ showNotif('Admin only','error'); return; }
+  if(!confirm('Delete club?')) return;
+  try { await deleteDoc(doc(db,'clubs',id)); showNotif('Deleted','success'); }
+  catch(e){ showNotif(e.message,'error'); }
+};
 
-            // Attach logout handler
-            logoutBtn.addEventListener('click', logout);
-        }
+/* ----------------------------
+   Auth state & UI updates
+   ---------------------------- */
+onAuthStateChanged(auth, async user=>{
+  currentUser = user;
+  const sideUser = document.getElementById('sideUser');
+  const sideEmail = document.getElementById('sideEmail');
+  const btnLogout = document.getElementById('btnLogout');
+  const navAdmin = document.getElementById('navAdmin');
+  const addEventBtn = document.getElementById('btnAddEvent');
+  const addClubBtn = document.getElementById('btnAddClub');
 
-        // Set up admin event listeners
-        function setupAdminEventListeners() {
-            // Add announcement button
-            document.getElementById('add-announcement-btn').addEventListener('click', () => {
-                document.getElementById('add-announcement-modal').style.display = 'flex';
-            });
+  if(user){
+    sideUser.textContent = 'Signed in as';
+    sideEmail.textContent = user.email;
+    btnLogout.classList.remove('hidden');
 
-            // Add event button
-            document.getElementById('add-event-btn').addEventListener('click', () => {
-                document.getElementById('add-event-modal').style.display = 'flex';
-            });
+    // check admin role
+    isAdmin = await checkAdminRole(user.uid, user.email);
+    if(isAdmin){
+      navAdmin.classList.remove('hidden');
+      addEventBtn.classList.remove('hidden');
+      addClubBtn.classList.remove('hidden');
+      document.getElementById('admin').classList.remove('hidden');
+    } else {
+      navAdmin.classList.add('hidden');
+      addEventBtn.classList.add('hidden');
+      addClubBtn.classList.add('hidden');
+      document.getElementById('admin').classList.add('hidden');
+    }
 
-            // Add club button
-            document.getElementById('add-club-btn').addEventListener('click', () => {
-                document.getElementById('add-club-modal').style.display = 'flex';
-            });
+    // show dashboard content
+    document.getElementById('dashContent').innerHTML = `<div class="card">Welcome, <strong>${escapeHtml(user.email)}</strong> — use the sidebar to navigate.</div>`;
+    // load profile
+    loadProfile();
+  } else {
+    sideUser.textContent = 'Not signed in';
+    sideEmail.textContent = '';
+    btnLogout.classList.add('hidden');
+    navAdmin.classList.add('hidden');
+    addEventBtn.classList.add('hidden');
+    addClubBtn.classList.add('hidden');
+    document.getElementById('admin').classList.add('hidden');
 
-            // Add announcement form submission
-            document.getElementById('add-announcement-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const title = document.getElementById('announcement-title').value;
-                const content = document.getElementById('announcement-content').value;
-                
-                try {
-                    await db.collection('announcements').add({
-                        title: title,
-                        content: content,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
-                    // Close modal and reset form
-                    document.getElementById('add-announcement-modal').style.display = 'none';
-                    document.getElementById('add-announcement-form').reset();
-                    
-                    // Reload announcements
-                    loadAnnouncements();
-                    loadAdminContent();
-                    
-                    alert('Announcement added successfully!');
-                } catch (error) {
-                    console.error('Error adding announcement:', error);
-                    alert('Error adding announcement. Please try again.');
-                }
-            });
+    document.getElementById('dashContent').innerHTML = `<div class="card small">Please sign in to access the dashboard and pages.</div>`;
+    document.getElementById('profileInfo').textContent = 'Load profile after sign in.';
+  }
+});
 
-            // Add event form submission
-            document.getElementById('add-event-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const title = document.getElementById('event-title').value;
-                const date = document.getElementById('event-date').value;
-                const time = document.getElementById('event-time').value;
-                const location = document.getElementById('event-location').value;
-                const description = document.getElementById('event-description').value;
-                
-                try {
-                    await db.collection('events').add({
-                        title: title,
-                        date: date,
-                        time: time,
-                        location: location,
-                        description: description,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
-                    // Close modal and reset form
-                    document.getElementById('add-event-modal').style.display = 'none';
-                    document.getElementById('add-event-form').reset();
-                    
-                    // Reload events
-                    loadEvents();
-                    loadAdminContent();
-                    
-                    alert('Event added successfully!');
-                } catch (error) {
-                    console.error('Error adding event:', error);
-                    alert('Error adding event. Please try again.');
-                }
-            });
+/* ----------------------------
+   Profile load/save (basic)
+   ---------------------------- */
+async function loadProfile(){
+  if(!currentUser) return;
+  const p = document.getElementById('profileInfo');
+  try {
+    const udoc = await getDoc(doc(db,'profiles',currentUser.uid));
+    if(udoc.exists()){
+      const d = udoc.data();
+      p.innerHTML = `<div style="font-weight:700">${escapeHtml(d.name||currentUser.email)}</div><div class="small" style="margin-top:8px">${escapeHtml(d.bio||'')}</div>`;
+    } else {
+      p.innerHTML = `<div style="font-weight:700">${escapeHtml(currentUser.email)}</div><div class="small" style="margin-top:8px">No profile yet.</div>`;
+    }
+  } catch(e){ console.error(e); showNotif('Profile load error','error'); }
+}
 
-            // Add club form submission
-            document.getElementById('add-club-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('club-name').value;
-                const description = document.getElementById('club-description').value;
-                const meetingDay = document.getElementById('club-meeting-day').value;
-                const meetingTime = document.getElementById('club-meeting-time').value;
-                const advisor = document.getElementById('club-advisor').value;
-                
-                try {
-                    await db.collection('clubs').add({
-                        name: name,
-                        description: description,
-                        meetingDay: meetingDay,
-                        meetingTime: meetingTime,
-                        advisor: advisor,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
-                    // Close modal and reset form
-                    document.getElementById('add-club-modal').style.display = 'none';
-                    document.getElementById('add-club-form').reset();
-                    
-                    // Reload clubs
-                    loadClubs();
-                    loadAdminContent();
-                    
-                    alert('Club added successfully!');
-                } catch (error) {
-                    console.error('Error adding club:', error);
-                    alert('Error adding club. Please try again.');
-                }
-            });
-        }
+/* ----------------------------
+   Utility
+   ---------------------------- */
+function escapeHtml(s){
+  if(!s) return '';
+  return s.toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
 
-        // Set up modal event listeners
-        function setupModalEventListeners() {
-            // Language selector
-            document.getElementById('language-select').addEventListener('change', function() {
-                const selectedLanguage = this.value;
-                alert(`Language changed to ${this.options[this.selectedIndex].text}. In a real application, the website content would be translated.`);
-            });
-        }
+/* ----------------------------
+   Initial view & helpers
+   ---------------------------- */
+(function init(){
+  // default view
+  document.querySelectorAll('.nav button')[0].click();
+  // close modals on backdrop click
+  document.querySelectorAll('.modal').forEach(mod=>{
+    mod.addEventListener('click', e=>{
+      if(e.target === mod) mod.classList.add('hidden');
+    });
+  });
+  // preload admin demo: optionally create admin user automatically (dangerous) — NOT doing that.
+  // Instead: the admin credential provided works if you create that user in Firebase Auth console
+  // For convenience, show notification
+  showNotif('Welcome — sign in or register. Admin can create events/clubs.', 'success');
+})();
 
-        // Load admin content
-        async function loadAdminContent() {
-            await loadAdminAnnouncements();
-            await loadAdminEvents();
-            await loadAdminClubs();
-            await loadAdminStats();
-        }
-
-        // Load admin announcements
-        async function loadAdminAnnouncements() {
-            try {
-                const snapshot = await db.collection('announcements')
-                    .orderBy('createdAt', 'desc')
-                    .get();
-                
-                const container = document.getElementById('admin-announcements-list');
-                
-                if (snapshot.empty) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">campaign</i>
-                            <h3>No Announcements Yet</h3>
-                            <p>Add your first announcement to get started.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = '';
-                
-                snapshot.forEach(doc => {
-                    const announcement = doc.data();
-                    const element = document.createElement('div');
-                    element.className = 'announcement-item';
-                    element.innerHTML = `
-                        <div class="announcement-title">${announcement.title}</div>
-                        <div class="announcement-date">Posted on: ${announcement.createdAt.toDate().toLocaleDateString()}</div>
-                        <p>${announcement.content}</p>
-                        <div style="margin-top: 10px;">
-                            <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
-                        </div>
-                    `;
-                    
-                    // Add delete functionality
-                    const deleteBtn = element.querySelector('.btn-delete');
-                    deleteBtn.addEventListener('click', async () => {
-                        if (confirm('Are you sure you want to delete this announcement?')) {
-                            try {
-                                await db.collection('announcements').doc(doc.id).delete();
-                                loadAdminAnnouncements();
-                                loadAnnouncements();
-                                loadAdminStats();
-                                alert('Announcement deleted successfully!');
-                            } catch (error) {
-                                console.error('Error deleting announcement:', error);
-                                alert('Error deleting announcement. Please try again.');
-                            }
-                        }
-                    });
-                    
-                    container.appendChild(element);
-                });
-            } catch (error) {
-                console.error('Error loading admin announcements:', error);
-            }
-        }
-
-        // Load admin events
-        async function loadAdminEvents() {
-            try {
-                const snapshot = await db.collection('events')
-                    .orderBy('date', 'asc')
-                    .get();
-                
-                const container = document.getElementById('admin-events-list');
-                
-                if (snapshot.empty) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">event</i>
-                            <h3>No Events Yet</h3>
-                            <p>Add your first event to get started.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = '';
-                
-                snapshot.forEach(doc => {
-                    const event = doc.data();
-                    const element = document.createElement('div');
-                    element.className = 'event-card';
-                    element.innerHTML = `
-                        <div class="event-date">${new Date(event.date).toLocaleDateString()}</div>
-                        <h4>${event.title}</h4>
-                        <p>${event.description}</p>
-                        <p><strong>Time:</strong> ${event.time}</p>
-                        <p><strong>Location:</strong> ${event.location}</p>
-                        <div style="margin-top: 10px;">
-                            <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
-                        </div>
-                    `;
-                    
-                    // Add delete functionality
-                    const deleteBtn = element.querySelector('.btn-delete');
-                    deleteBtn.addEventListener('click', async () => {
-                        if (confirm('Are you sure you want to delete this event?')) {
-                            try {
-                                await db.collection('events').doc(doc.id).delete();
-                                loadAdminEvents();
-                                loadEvents();
-                                loadAdminStats();
-                                alert('Event deleted successfully!');
-                            } catch (error) {
-                                console.error('Error deleting event:', error);
-                                alert('Error deleting event. Please try again.');
-                            }
-                        }
-                    });
-                    
-                    container.appendChild(element);
-                });
-            } catch (error) {
-                console.error('Error loading admin events:', error);
-            }
-        }
-
-        // Load admin clubs
-        async function loadAdminClubs() {
-            try {
-                const snapshot = await db.collection('clubs').get();
-                
-                const container = document.getElementById('admin-clubs-list');
-                
-                if (snapshot.empty) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="material-icons">groups</i>
-                            <h3>No Clubs Yet</h3>
-                            <p>Add your first club to get started.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                container.innerHTML = '';
-                
-                snapshot.forEach(doc => {
-                    const club = doc.data();
-                    const element = document.createElement('div');
-                    element.className = 'club-card';
-                    element.innerHTML = `
-                        <div class="club-image">
-                            <i class="material-icons">groups</i>
-                        </div>
-                        <div class="club-info">
-                            <div class="club-name">${club.name}</div>
-                            <p>${club.description}</p>
-                            <p><strong>Meeting:</strong> ${club.meetingDay}s, ${club.meetingTime}</p>
-                            <p><strong>Advisor:</strong> ${club.advisor}</p>
-                            <div style="margin-top: 10px;">
-                                <button class="btn-action btn-delete" data-id="${doc.id}">Delete</button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Add delete functionality
-                    const deleteBtn = element.querySelector('.btn-delete');
-                    deleteBtn.addEventListener('click', async () => {
-                        if (confirm('Are you sure you want to delete this club?')) {
-                            try {
-                                await db.collection('clubs').doc(doc.id).delete();
-                                loadAdminClubs();
-                                loadClubs();
-                                loadAdminStats();
-                                alert('Club deleted successfully!');
-                            } catch (error) {
-                                console.error('Error deleting club:', error);
-                                alert('Error deleting club. Please try again.');
-                            }
-                        }
-                    });
-                    
-                    container.appendChild(element);
-                });
-            } catch (error) {
-                console.error('Error loading admin clubs:', error);
-            }
-        }
-
-        // Load admin statistics
-        async function loadAdminStats() {
-            try {
-                // Get counts
-                const announcementsSnapshot = await db.collection('announcements').get();
-                const eventsSnapshot = await db.collection('events').get();
-                const clubsSnapshot = await db.collection('clubs').get();
-                const usersSnapshot = await db.collection('users').get();
-                
-                // Update counts
-                document.getElementById('total-announcements').textContent = announcementsSnapshot.size;
-                document.getElementById('total-events').textContent = eventsSnapshot.size;
-                document.getElementById('total-clubs').textContent = clubsSnapshot.size;
-                document.getElementById('total-users').textContent = usersSnapshot.size;
-            } catch (error) {
-                console.error('Error loading admin stats:', error);
-            }
-        }
-
-        // Update UI based on user role
-        function updateUIForUser() {
-            // Hide auth buttons, show user info
-            document.getElementById('auth-buttons').style.display = 'none';
-            document.getElementById('user-info').style.display = 'flex';
-            
-            // Update account info if available
-            if (currentUser) {
-                document.getElementById('email').value = currentUser.email;
-            }
-            
-            // Show admin nav item if user is admin
-            if (userRole === 'admin') {
-                document.getElementById('admin-nav-item').style.display = 'list-item';
-            }
-        }
-
-        // Clear error messages
-        function clearErrorMessages() {
-            document.querySelectorAll('.error-message').forEach(error => {
-                error.style.display = 'none';
-                error.textContent = '';
-            });
-        }
-
-        // Display error message
-        function showError(elementId, message) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        // Auth state observer
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = user;
-                
-                // Get user role from Firestore
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                if (userDoc.exists) {
-                    userRole = userDoc.data().role;
-                    document.getElementById('user-name').textContent = userDoc.data().name;
-                    
-                    // Update UI based on role
-                    updateUIForUser();
-                }
-            } else {
-                // User is signed out
-                currentUser = null;
-                userRole = null;
-            }
-        });
-    </script>
+</script>
 </body>
 </html>
