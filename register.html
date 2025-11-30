@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    body { font-family: Arial; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: #222; padding: 30px; border-radius: 20px; width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 10px; background: #444; color: white; }
+    button { width: 100%; padding: 12px; background: #1e90ff; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    a { color: #1e90ff; text-decoration: none; display: block; text-align: center; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 style="text-align:center;">Register</h2>
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <a href="index.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    function register() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if (!name || !email || !password) return alert('Fill all fields');
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find(u => u.email === email)) return alert('Email already exists');
+
+      users.push({ email, password, name, isAdmin: false });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Registered successfully! Now login.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
