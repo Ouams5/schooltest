@@ -1,0 +1,32 @@
+<!-- Same head/nav as above -->
+<main>
+  <div class="topbar">Announcements Page</div>
+  <div class="content">
+    <div id="announcements"></div>
+    <div class="admin-only">
+      <h3>Add Announcement</h3>
+      <input type="text" id="newAnn" placeholder="Type announcement..." style="width:80%; padding:10px; border-radius:10px;">
+      <button onclick="addAnnouncement()">Add</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  // ... same auth script ...
+
+  function loadAnnouncements() {
+    const ann = JSON.parse(localStorage.getItem('announcements') || '[]');
+    document.getElementById('announcements').innerHTML = ann.map(a => `<div class="item">${a}</div>`).join('');
+  }
+  function addAnnouncement() {
+    if (!currentUser.isAdmin) return;
+    const text = document.getElementById('newAnn').value;
+    if (!text) return;
+    let ann = JSON.parse(localStorage.getItem('announcements') || '[]');
+    ann.push(text);
+    localStorage.setItem('announcements', JSON.stringify(ann));
+    document.getElementById('newAnn').value = '';
+    loadAnnouncements();
+  }
+  loadAnnouncements();
+</script>
