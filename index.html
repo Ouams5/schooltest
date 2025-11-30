@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global School - Home</title>
+    <title>BNIYEKHLEF High School</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <!-- Google Icons -->
@@ -129,6 +133,21 @@
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .user-info span {
+            margin-right: 10px;
+        }
+        
+        .btn-logout {
+            background-color: var(--danger);
+            color: white;
         }
         
         /* Language Selector */
@@ -355,6 +374,13 @@
             text-decoration: none;
         }
         
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
         /* Admin Panel */
         .admin-panel {
             display: none;
@@ -537,7 +563,7 @@
         <div class="container header-container">
             <div class="logo">
                 <i class="material-icons logo-icon">school</i>
-                <h1>Global School</h1>
+                <h1>BNIYEKHLEF High School</h1>
             </div>
             <nav>
                 <ul>
@@ -549,9 +575,13 @@
                     <li><a href="#" class="nav-link" data-page="settings"><i class="material-icons">settings</i> Settings</a></li>
                 </ul>
             </nav>
-            <div class="auth-buttons">
+            <div class="auth-buttons" id="auth-buttons">
                 <button class="btn btn-login" id="login-btn">Login</button>
                 <button class="btn btn-register" id="register-btn">Register</button>
+            </div>
+            <div class="user-info" id="user-info" style="display: none;">
+                <span id="user-name"></span>
+                <button class="btn btn-logout" id="logout-btn">Logout</button>
             </div>
             <div class="language-selector">
                 <select id="language-select">
@@ -568,10 +598,10 @@
         <div class="container">
             <!-- Homepage -->
             <section id="homepage" class="page-content active">
-                <h2 class="page-title">Welcome to Global School</h2>
+                <h2 class="page-title">Welcome to BNIYEKHLEF High School</h2>
                 <div class="card">
                     <h3><i class="material-icons">info</i> About Our School</h3>
-                    <p>Global School is committed to providing high-quality education that prepares students for success in a rapidly changing world. Our dedicated faculty and comprehensive curriculum ensure that every student reaches their full potential.</p>
+                    <p>BNIYEKHLEF High School is committed to providing high-quality education that prepares students for success in a rapidly changing world. Our dedicated faculty and comprehensive curriculum ensure that every student reaches their full potential.</p>
                 </div>
                 <div class="card">
                     <h3><i class="material-icons">star</i> Featured Announcements</h3>
@@ -807,10 +837,12 @@
                 <div class="form-group">
                     <label for="login-email">Email Address</label>
                     <input type="email" id="login-email" class="form-control" required>
+                    <div class="error-message" id="login-email-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" class="form-control" required>
+                    <div class="error-message" id="login-password-error"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
@@ -831,18 +863,22 @@
                 <div class="form-group">
                     <label for="register-name">Full Name</label>
                     <input type="text" id="register-name" class="form-control" required>
+                    <div class="error-message" id="register-name-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="register-email">Email Address</label>
                     <input type="email" id="register-email" class="form-control" required>
+                    <div class="error-message" id="register-email-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="register-password">Password</label>
                     <input type="password" id="register-password" class="form-control" required>
+                    <div class="error-message" id="register-password-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="register-confirm-password">Confirm Password</label>
                     <input type="password" id="register-confirm-password" class="form-control" required>
+                    <div class="error-message" id="register-confirm-password-error"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
@@ -858,7 +894,7 @@
             <div class="container admin-nav">
                 <div class="logo">
                     <i class="material-icons logo-icon">admin_panel_settings</i>
-                    <h1>Admin Panel</h1>
+                    <h1>Admin Panel - BNIYEKHLEF High School</h1>
                 </div>
                 <nav>
                     <ul>
@@ -870,7 +906,7 @@
                     </ul>
                 </nav>
                 <div>
-                    <button class="btn btn-login" id="logout-admin">Logout</button>
+                    <button class="btn btn-logout" id="logout-admin">Logout</button>
                 </div>
             </div>
         </div>
@@ -1155,7 +1191,7 @@
         <div class="container footer-content">
             <div class="logo">
                 <i class="material-icons logo-icon">school</i>
-                <h1>Global School</h1>
+                <h1>BNIYEKHLEF High School</h1>
             </div>
             <div class="footer-links">
                 <a href="#">Homepage</a>
@@ -1166,12 +1202,32 @@
                 <a href="#">Settings</a>
             </div>
             <div class="copyright">
-                &copy; 2023 Global School. All rights reserved.
+                &copy; 2023 BNIYEKHLEF High School. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6ha3-iiXidoa0KnB9PuA0fnlqDUkcV2g",
+            authDomain: "bniyekhlef-high-school.firebaseapp.com",
+            projectId: "bniyekhlef-high-school",
+            storageBucket: "bniyekhlef-high-school.firebasestorage.app",
+            messagingSenderId: "807833913334",
+            appId: "1:807833913334:web:a5eb4e2b96c0c32f2169d7",
+            measurementId: "G-QCWNGXXRPP"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables
+        let currentUser = null;
+        let userRole = null;
+
         // Page Navigation
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1226,6 +1282,10 @@
         const switchToLogin = document.getElementById('switch-to-login');
         const adminPanel = document.getElementById('admin-panel');
         const logoutAdminBtn = document.getElementById('logout-admin');
+        const logoutBtn = document.getElementById('logout-btn');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const userName = document.getElementById('user-name');
 
         // Show login modal
         loginBtn.addEventListener('click', () => {
@@ -1242,6 +1302,7 @@
             button.addEventListener('click', () => {
                 loginModal.style.display = 'none';
                 registerModal.style.display = 'none';
+                clearErrorMessages();
             });
         });
 
@@ -1250,70 +1311,189 @@
             e.preventDefault();
             loginModal.style.display = 'none';
             registerModal.style.display = 'flex';
+            clearErrorMessages();
         });
 
         switchToLogin.addEventListener('click', (e) => {
             e.preventDefault();
             registerModal.style.display = 'none';
             loginModal.style.display = 'flex';
+            clearErrorMessages();
         });
 
         // Close modal when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 loginModal.style.display = 'none';
+                clearErrorMessages();
             }
             if (e.target === registerModal) {
                 registerModal.style.display = 'none';
+                clearErrorMessages();
             }
         });
 
+        // Clear error messages
+        function clearErrorMessages() {
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+                error.textContent = '';
+            });
+        }
+
+        // Display error message
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
         // Login form submission
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            clearErrorMessages();
+            
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            // Simple admin check (in a real app, this would be server-side)
-            if (email === 'admin@school.com' && password === 'admin123') {
-                // Show admin panel
-                document.querySelector('header').style.display = 'none';
-                document.querySelector('main').style.display = 'none';
-                document.querySelector('footer').style.display = 'none';
-                adminPanel.style.display = 'block';
-                loginModal.style.display = 'none';
-            } else {
-                // Regular user login (in a real app, this would redirect to user dashboard)
-                alert('Login successful! (This is a demo - in a real app, you would be redirected to your dashboard)');
-                loginModal.style.display = 'none';
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                currentUser = userCredential.user;
+                
+                // Get user role from Firestore
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    userRole = userDoc.data().role;
+                    userName.textContent = userDoc.data().name;
+                    
+                    // Update UI based on role
+                    updateUIForUser();
+                    
+                    // Close modal
+                    loginModal.style.display = 'none';
+                    
+                    // Show success message
+                    alert('Login successful!');
+                } else {
+                    showError('login-email-error', 'User data not found. Please contact administrator.');
+                    await auth.signOut();
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('login-email-error', error.message);
             }
         });
 
         // Register form submission
-        document.getElementById('register-form').addEventListener('submit', (e) => {
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            clearErrorMessages();
+            
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm-password').value;
             
             if (password !== confirmPassword) {
-                alert('Passwords do not match!');
+                showError('register-confirm-password-error', 'Passwords do not match!');
                 return;
             }
             
-            // Registration successful (in a real app, this would create a user account)
-            alert('Registration successful! You can now login with your credentials.');
-            registerModal.style.display = 'none';
-            loginModal.style.display = 'flex';
+            if (password.length < 6) {
+                showError('register-password-error', 'Password must be at least 6 characters!');
+                return;
+            }
+            
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                currentUser = userCredential.user;
+                
+                // Create user document in Firestore with default role 'student'
+                await db.collection('users').doc(currentUser.uid).set({
+                    name: name,
+                    email: email,
+                    role: 'student',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                userRole = 'student';
+                userName.textContent = name;
+                
+                // Update UI based on role
+                updateUIForUser();
+                
+                // Close modal
+                registerModal.style.display = 'none';
+                
+                // Show success message
+                alert('Registration successful!');
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('register-email-error', error.message);
+            }
         });
 
-        // Logout from admin panel
-        logoutAdminBtn.addEventListener('click', () => {
-            adminPanel.style.display = 'none';
-            document.querySelector('header').style.display = 'block';
-            document.querySelector('main').style.display = 'block';
-            document.querySelector('footer').style.display = 'block';
+        // Update UI based on user role
+        function updateUIForUser() {
+            // Hide auth buttons, show user info
+            authButtons.style.display = 'none';
+            userInfo.style.display = 'flex';
+            
+            // Show admin panel if user is admin
+            if (userRole === 'admin') {
+                document.querySelector('header').style.display = 'none';
+                document.querySelector('main').style.display = 'none';
+                document.querySelector('footer').style.display = 'none';
+                adminPanel.style.display = 'block';
+            }
+        }
+
+        // Logout functionality
+        function logout() {
+            auth.signOut().then(() => {
+                currentUser = null;
+                userRole = null;
+                
+                // Reset UI
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+                adminPanel.style.display = 'none';
+                document.querySelector('header').style.display = 'block';
+                document.querySelector('main').style.display = 'block';
+                document.querySelector('footer').style.display = 'block';
+                
+                // Show login modal
+                loginModal.style.display = 'none';
+                
+                alert('You have been logged out.');
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        }
+
+        // Attach logout handlers
+        logoutBtn.addEventListener('click', logout);
+        logoutAdminBtn.addEventListener('click', logout);
+
+        // Auth state observer
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                
+                // Get user role from Firestore
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    userRole = userDoc.data().role;
+                    userName.textContent = userDoc.data().name;
+                    
+                    // Update UI based on role
+                    updateUIForUser();
+                }
+            } else {
+                // User is signed out
+                currentUser = null;
+                userRole = null;
+            }
         });
 
         // Language selector
